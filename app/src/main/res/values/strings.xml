@@ -19,4 +19,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- Strings related to drawer menu -->
+    <string name="main_screen">Main Screen</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">My Gallery</string>
+    <string name="inspect_photos">Inspect Photos</string>
+    <string name="share">Share</string>
+    <string name="logout">Logout</string>
+
 </resources>

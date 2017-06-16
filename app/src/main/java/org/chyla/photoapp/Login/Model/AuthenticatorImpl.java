@@ -3,6 +3,7 @@ package org.chyla.photoapp.Login.Model;
 import android.text.TextUtils;
 
 import org.chyla.photoapp.Login.Model.Event.ErrorEvent;
+import org.chyla.photoapp.Login.Model.Event.SuccessEvent;
 import org.chyla.photoapp.Login.Repository.LoginRepository;
 import org.chyla.photoapp.Login.Repository.LoginRepositoryImpl;
 import org.greenrobot.eventbus.EventBus;
@@ -38,5 +39,10 @@ public class AuthenticatorImpl implements Authenticator {
         return password.length() > 4;
     }
 
-
+    @Override
+    public void checkUserLoggedIn() {
+        if (repository.isUserLoggedIn()) {
+            EventBus.getDefault().post(new SuccessEvent());
+        }
+    }
 }

@@ -32,6 +32,7 @@ public class LoginPresenterImpl implements LoginPresenter {
     @Override
     public void onStart() {
         EventBus.getDefault().register(this);
+        authenticator.checkUserLoggedIn();
     }
 
     @Override

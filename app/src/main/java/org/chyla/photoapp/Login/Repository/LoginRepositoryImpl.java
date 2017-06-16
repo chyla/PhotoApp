@@ -10,6 +10,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
+
 import org.greenrobot.eventbus.EventBus;
 
 public class LoginRepositoryImpl implements LoginRepository {
@@ -41,6 +43,13 @@ public class LoginRepositoryImpl implements LoginRepository {
                         EventBus.getDefault().post(event);
                     }
                 });
+    }
+
+    @Override
+    public boolean isUserLoggedIn() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        return user != null;
     }
 
 }

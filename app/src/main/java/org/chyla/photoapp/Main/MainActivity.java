@@ -1,5 +1,8 @@
 package org.chyla.photoapp.Main;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import org.chyla.photoapp.Login.LoginActivity;
 import org.chyla.photoapp.Main.Presenter.MainPresenter;
@@ -27,11 +31,14 @@ public class MainActivity extends AppCompatActivity
 
     MainPresenter presenter;
 
-    @BindView(R.id.gallery_fragment)
-    View galleryFragment;
+    @BindView(R.id.fragment_container)
+    FrameLayout fragmentContainer;
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
+
+    private final FragmentManager fragmentManager = getFragmentManager();
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +67,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        hideAllFragments();
     }
 
     @Override
@@ -99,8 +104,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        hideAllFragments();
-
         switch (id) {
             case R.id.nav_gallery:
                 showGalleryFragment();
@@ -111,6 +114,7 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
+        fragmentManager.executePendingTransactions();
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -121,11 +125,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showGalleryFragment() {
-        galleryFragment.setVisibility(View.VISIBLE);
-    }
-
-    private void hideAllFragments() {
-        galleryFragment.setVisibility(View.GONE);
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        currentFragment = new GalleryFragment();
+        ft.replace(R.id.fragment_container, currentFragment);
+        ft.commit();
     }
 
 }

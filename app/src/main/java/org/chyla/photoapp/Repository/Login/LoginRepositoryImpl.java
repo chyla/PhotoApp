@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Login.Repository;
+package org.chyla.photoapp.Repository.Login;
 
 import org.chyla.photoapp.Model.Authenticator.Event.ErrorEvent;
 import org.chyla.photoapp.Model.Authenticator.Event.SuccessEvent;

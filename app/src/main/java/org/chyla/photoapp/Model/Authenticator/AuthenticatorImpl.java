@@ -40,9 +40,15 @@ public class AuthenticatorImpl implements Authenticator {
     }
 
     @Override
+    public void logoutUser() {
+        repository.logout();
+    }
+
+    @Override
     public void checkUserLoggedIn() {
         if (repository.isUserLoggedIn()) {
             EventBus.getDefault().post(new SuccessEvent());
         }
     }
+
 }

@@ -46,6 +46,13 @@ public class LoginRepositoryImpl implements LoginRepository {
     }
 
     @Override
+    public void logout() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        auth.signOut();
+    }
+
+    @Override
     public boolean isUserLoggedIn() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();

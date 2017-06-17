@@ -1,7 +1,7 @@
 package org.chyla.photoapp.Login.Repository;
 
-import org.chyla.photoapp.Login.Model.Event.ErrorEvent;
-import org.chyla.photoapp.Login.Model.Event.SuccessEvent;
+import org.chyla.photoapp.Model.Authenticator.Event.ErrorEvent;
+import org.chyla.photoapp.Model.Authenticator.Event.SuccessEvent;
 
 import android.support.annotation.NonNull;
 

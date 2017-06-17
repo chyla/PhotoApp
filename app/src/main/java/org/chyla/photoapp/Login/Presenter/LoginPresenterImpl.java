@@ -2,11 +2,11 @@ package org.chyla.photoapp.Login.Presenter;
 
 
 import org.chyla.photoapp.Login.LoginView;
-import org.chyla.photoapp.Login.Model.Authenticator;
-import org.chyla.photoapp.Login.Model.AuthenticatorImpl;
-import org.chyla.photoapp.Login.Model.Event.CancelledEvent;
-import org.chyla.photoapp.Login.Model.Event.ErrorEvent;
-import org.chyla.photoapp.Login.Model.Event.SuccessEvent;
+import org.chyla.photoapp.Model.Authenticator.Authenticator;
+import org.chyla.photoapp.Model.Authenticator.AuthenticatorImpl;
+import org.chyla.photoapp.Model.Authenticator.Event.CancelledEvent;
+import org.chyla.photoapp.Model.Authenticator.Event.ErrorEvent;
+import org.chyla.photoapp.Model.Authenticator.Event.SuccessEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

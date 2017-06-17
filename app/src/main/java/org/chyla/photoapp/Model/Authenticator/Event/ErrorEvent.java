@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Login.Model.Event;
+package org.chyla.photoapp.Model.Authenticator.Event;
 
 public class ErrorEvent {
 

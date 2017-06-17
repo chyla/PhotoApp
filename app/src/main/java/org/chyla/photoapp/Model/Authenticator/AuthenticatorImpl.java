@@ -1,11 +1,11 @@
-package org.chyla.photoapp.Login.Model;
+package org.chyla.photoapp.Model.Authenticator;
 
 import android.text.TextUtils;
 
-import org.chyla.photoapp.Login.Model.Event.ErrorEvent;
-import org.chyla.photoapp.Login.Model.Event.SuccessEvent;
 import org.chyla.photoapp.Login.Repository.LoginRepository;
 import org.chyla.photoapp.Login.Repository.LoginRepositoryImpl;
+import org.chyla.photoapp.Model.Authenticator.Event.ErrorEvent;
+import org.chyla.photoapp.Model.Authenticator.Event.SuccessEvent;
 import org.greenrobot.eventbus.EventBus;
 
 public class AuthenticatorImpl implements Authenticator {

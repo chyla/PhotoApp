@@ -1,8 +1,8 @@
 package org.chyla.photoapp.Login.Presenter;
 
-import org.chyla.photoapp.Login.Model.Event.CancelledEvent;
-import org.chyla.photoapp.Login.Model.Event.ErrorEvent;
-import org.chyla.photoapp.Login.Model.Event.SuccessEvent;
+import org.chyla.photoapp.Model.Authenticator.Event.CancelledEvent;
+import org.chyla.photoapp.Model.Authenticator.Event.ErrorEvent;
+import org.chyla.photoapp.Model.Authenticator.Event.SuccessEvent;
 
 public interface LoginPresenter {
     void onStart();

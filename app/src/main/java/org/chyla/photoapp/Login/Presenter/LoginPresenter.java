@@ -9,6 +9,7 @@ public interface LoginPresenter {
     void onStop();
 
     void authenticate(String username, String password);
+    void register(String username, String password);
 
     void onSuccessEvent(SuccessEvent event);
     void onErrorEvent(ErrorEvent event);

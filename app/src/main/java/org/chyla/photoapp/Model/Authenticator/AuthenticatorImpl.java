@@ -18,17 +18,37 @@ public class AuthenticatorImpl implements Authenticator {
 
     @Override
     public void loginUser(String username, String password) {
-        if (TextUtils.isEmpty(username) || !isEmailValid(username)) {
+        if (!isEmailValid(username)) {
             EventBus.getDefault().post(new ErrorEvent(ErrorEvent.Type.MAIL_ERROR));
             return;
         }
 
-        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
+        if (!isPasswordValid(password)) {
             EventBus.getDefault().post(new ErrorEvent(ErrorEvent.Type.PASSWORD_ERROR));
             return;
         }
 
         repository.login(username, password);
+    }
+
+    @Override
+    public void logoutUser() {
+        repository.logout();
+    }
+
+    @Override
+    public void register(String username, String password) {
+        if (!isEmailValid(username)) {
+            EventBus.getDefault().post(new ErrorEvent(ErrorEvent.Type.MAIL_ERROR));
+            return;
+        }
+
+        if (!isPasswordValid(password)) {
+            EventBus.getDefault().post(new ErrorEvent(ErrorEvent.Type.PASSWORD_ERROR));
+            return;
+        }
+
+        repository.register(username, password);
     }
 
     private boolean isEmailValid(String email) {
@@ -37,11 +57,6 @@ public class AuthenticatorImpl implements Authenticator {
 
     private boolean isPasswordValid(String password) {
         return password.length() > 4;
-    }
-
-    @Override
-    public void logoutUser() {
-        repository.logout();
     }
 
     @Override

@@ -55,6 +55,11 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         presenter.authenticate(mEmailView.getText().toString(), mPasswordView.getText().toString());
     }
 
+    @OnClick(R.id.email_register_button)
+    void attemptRegister() {
+        presenter.register(mEmailView.getText().toString(), mPasswordView.getText().toString());
+    }
+
     @Override
     public void showLoginForm() {
         mLoginFormView.setVisibility(View.VISIBLE);

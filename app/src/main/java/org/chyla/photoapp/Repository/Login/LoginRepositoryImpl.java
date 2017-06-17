@@ -1,8 +1,5 @@
 package org.chyla.photoapp.Repository.Login;
 
-import org.chyla.photoapp.Model.Authenticator.Event.ErrorEvent;
-import org.chyla.photoapp.Model.Authenticator.Event.SuccessEvent;
-
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -12,6 +9,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.chyla.photoapp.Model.Authenticator.Event.ErrorEvent;
+import org.chyla.photoapp.Model.Authenticator.Event.SuccessEvent;
 import org.greenrobot.eventbus.EventBus;
 
 public class LoginRepositoryImpl implements LoginRepository {
@@ -50,6 +49,26 @@ public class LoginRepositoryImpl implements LoginRepository {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         auth.signOut();
+    }
+
+    @Override
+    public void register(String username, String password) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        auth.createUserWithEmailAndPassword(username, password)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        EventBus.getDefault().post(new SuccessEvent());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        EventBus.getDefault().post(new ErrorEvent(ErrorEvent.Type.PASSWORD_ERROR));
+                    }
+                });
+
     }
 
     @Override

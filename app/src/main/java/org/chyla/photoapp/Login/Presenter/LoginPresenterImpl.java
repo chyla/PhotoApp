@@ -30,6 +30,13 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
+    public void register(String username, String password) {
+        view.hideLoginForm();
+        view.showProgress();
+        authenticator.register(username, password);
+    }
+
+    @Override
     public void onStart() {
         EventBus.getDefault().register(this);
         authenticator.checkUserLoggedIn();

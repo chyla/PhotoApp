@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:layout_margin="5dp"
+        android:layout_margin="15dp"
         android:background="@android:color/transparent"
-        android:padding="5dp"
+        android:padding="10dp"
         android:src="@mipmap/ic_launcher"
         app:srcCompat="@mipmap/ic_launcher" />
 

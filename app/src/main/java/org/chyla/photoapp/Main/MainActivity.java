@@ -109,6 +109,10 @@ public class MainActivity extends AppCompatActivity
                 showGalleryFragment();
                 break;
 
+            case R.id.nav_inspect_photos:
+                showInspectPhotosFragment();
+                break;
+
             case R.id.nav_logout:
                 presenter.logoutUser();
                 break;
@@ -125,8 +129,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showGalleryFragment() {
+        showFragment(new GalleryFragment());
+    }
+
+    private void showInspectPhotosFragment() {
+        showFragment(new InspectPhotosFragment());
+    }
+
+    private void showFragment(Fragment fragment) {
+        currentFragment = fragment;
+
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        currentFragment = new GalleryFragment();
         ft.replace(R.id.fragment_container, currentFragment);
         ft.commit();
     }

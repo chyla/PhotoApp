@@ -29,7 +29,8 @@
     <string name="share">Share</string>
     <string name="logout">Logout</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Inspect Photos Fragment -->
+    <string name="photo_search_by_tags">Enter tags separates with commas to search:</string>
+    <string name="search">Search</string>
 
 </resources>

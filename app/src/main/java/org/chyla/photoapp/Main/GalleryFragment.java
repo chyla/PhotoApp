@@ -27,6 +27,14 @@ public class GalleryFragment extends Fragment {
         photos = new LinkedList<>();
     }
 
+    public void addPhotos(final List<Photo> newPhotos) {
+        photos.addAll(newPhotos);
+
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -13,21 +13,27 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import org.chyla.photoapp.Login.LoginActivity;
+import org.chyla.photoapp.Main.Model.Photo;
 import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.Main.Presenter.MainPresenterImpl;
 import org.chyla.photoapp.R;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MainView {
+
+    private final static String LOG_TAG = "MainActivity";
 
     MainPresenter presenter;
 
@@ -128,12 +134,24 @@ public class MainActivity extends AppCompatActivity
         startActivity(new Intent(this, LoginActivity.class));
     }
 
+    @Override
+    public void showInspectedPhotosGallery(final List<Photo> photos) {
+        Log.d(LOG_TAG, "Received " + photos.size() + " photos to show.");
+
+        GalleryFragment fragment = new GalleryFragment();
+        fragment.addPhotos(photos);
+
+        showFragment(fragment);
+    }
+
     private void showGalleryFragment() {
         showFragment(new GalleryFragment());
     }
 
     private void showInspectPhotosFragment() {
-        showFragment(new InspectPhotosFragment());
+        InspectPhotosFragment fragment = new InspectPhotosFragment();
+        fragment.setPresenter(presenter);
+        showFragment(fragment);
     }
 
     private void showFragment(Fragment fragment) {
@@ -142,6 +160,18 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.fragment_container, currentFragment);
         ft.commit();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        presenter.onStop();
+        super.onStop();
     }
 
 }

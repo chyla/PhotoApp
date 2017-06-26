@@ -1,18 +1,40 @@
 package org.chyla.photoapp.Main;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
+import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class InspectPhotosFragment extends Fragment {
 
+    private final static String LOG_TAG = "InspectPhotosFragment";
+
+    private MainPresenter presenter;
+
+    @BindView(R.id.button_search)
+    Button searchButton;
+
+    @BindView(R.id.edittext_tags)
+    EditText tagsEditText;
+
     public InspectPhotosFragment() {
+    }
+
+    public void setPresenter(final MainPresenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
@@ -23,7 +45,11 @@ public class InspectPhotosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_inspect_photos, container, false);
+        View view = inflater.inflate(R.layout.fragment_inspect_photos, container, false);
+
+        ButterKnife.bind(this, view);
+
+        return view;
     }
 
     @Override
@@ -34,6 +60,12 @@ public class InspectPhotosFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @OnClick(R.id.button_search)
+    void searchPhotos() {
+        Log.d(LOG_TAG, "Search button clicked.");
+        presenter.inspectPhotos(tagsEditText.getText().toString());
     }
 
 }

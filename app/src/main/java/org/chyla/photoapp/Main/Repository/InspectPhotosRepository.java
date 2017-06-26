@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface InspectPhotosRepository {
 
-    void getPhotosByTags(final List<String> tags, InspectPhotosCallback callback);
+    void getPhotosByTags(final List<String> tags, GetPhotosCallback callback);
 
 }

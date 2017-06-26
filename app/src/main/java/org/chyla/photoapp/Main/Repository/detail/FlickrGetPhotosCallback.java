@@ -3,7 +3,7 @@ package org.chyla.photoapp.Main.Repository.detail;
 import android.util.Log;
 
 import org.chyla.photoapp.Main.Model.Photo;
-import org.chyla.photoapp.Main.Repository.InspectPhotosCallback;
+import org.chyla.photoapp.Main.Repository.GetPhotosCallback;
 import org.chyla.photoapp.Main.Repository.detail.objects.FlickrPhoto;
 import org.chyla.photoapp.Main.Repository.detail.objects.FlickrResponse;
 
@@ -18,9 +18,9 @@ import retrofit2.Response;
 public class FlickrGetPhotosCallback implements Callback<FlickrResponse> {
 
     private final static String LOG_TAG = "FlickrGetPhotosCallback";
-    private final InspectPhotosCallback callback;
+    private final GetPhotosCallback callback;
 
-    public FlickrGetPhotosCallback(InspectPhotosCallback callback) {
+    public FlickrGetPhotosCallback(GetPhotosCallback callback) {
         this.callback = callback;
     }
 
@@ -46,7 +46,7 @@ public class FlickrGetPhotosCallback implements Callback<FlickrResponse> {
                  }
              }
 
-             callback.inspectPhotosCallback(appPhotos);
+             callback.getPhotosCallback(appPhotos);
          }
          else {
              Log.e(LOG_TAG, "Received error response:");

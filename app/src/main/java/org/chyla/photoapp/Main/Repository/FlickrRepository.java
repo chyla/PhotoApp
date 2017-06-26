@@ -35,7 +35,7 @@ public class FlickrRepository implements InspectPhotosRepository {
     }
 
     @Override
-    public void getPhotosByTags(final List<String> tags, InspectPhotosCallback callback) {
+    public void getPhotosByTags(final List<String> tags, GetPhotosCallback callback) {
         final String allTags = convertTagsToString(tags);
 
         Log.i(LOG_TAG, "Looking for photos with tags: " + allTags);

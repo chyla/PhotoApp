@@ -4,8 +4,8 @@ import org.chyla.photoapp.Main.Model.Photo;
 
 import java.util.List;
 
-public interface InspectPhotosCallback {
+public interface GetPhotosCallback {
 
-    void inspectPhotosCallback(final List<Photo> photos);
+    void getPhotosCallback(final List<Photo> photos);
 
 }

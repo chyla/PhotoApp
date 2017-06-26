@@ -4,7 +4,7 @@ import android.util.Log;
 
 import org.chyla.photoapp.Main.Repository.detail.FlickrAPI;
 import org.chyla.photoapp.Main.Repository.detail.FlickrGetPhotosCallback;
-import org.chyla.photoapp.Main.Repository.detail.objects.SearchResponse;
+import org.chyla.photoapp.Main.Repository.detail.objects.FlickrResponse;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class FlickrRepository implements InspectPhotosRepository {
 
         Log.i(LOG_TAG, "Looking for photos with tags: " + allTags);
 
-        Call<SearchResponse> call = api.getPhotosByTags("", allTags);
+        Call<FlickrResponse> call = api.getPhotosByTags("", allTags);
         call.enqueue(new FlickrGetPhotosCallback(callback));
     }
 

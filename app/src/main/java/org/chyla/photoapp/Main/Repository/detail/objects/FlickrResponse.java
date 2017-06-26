@@ -6,7 +6,7 @@ import org.simpleframework.xml.Root;
 import java.util.List;
 
 @Root(name = "rsp", strict = false)
-public class SearchResponse {
+public class FlickrResponse {
 
     @ElementList(name = "photos")
     List<FlickrPhoto> photos;

@@ -5,7 +5,7 @@ import android.util.Log;
 import org.chyla.photoapp.Main.Model.Photo;
 import org.chyla.photoapp.Main.Repository.InspectPhotosCallback;
 import org.chyla.photoapp.Main.Repository.detail.objects.FlickrPhoto;
-import org.chyla.photoapp.Main.Repository.detail.objects.SearchResponse;
+import org.chyla.photoapp.Main.Repository.detail.objects.FlickrResponse;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FlickrGetPhotosCallback implements Callback<SearchResponse> {
+public class FlickrGetPhotosCallback implements Callback<FlickrResponse> {
 
     private static final String LOG_TAG = "FlickrGetPhotosCallback";
     private InspectPhotosCallback callback;
@@ -25,12 +25,12 @@ public class FlickrGetPhotosCallback implements Callback<SearchResponse> {
     }
 
     @Override
-    public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+    public void onResponse(Call<FlickrResponse> call, Response<FlickrResponse> response) {
          if (response.isSuccessful()) {
              Log.i(LOG_TAG, "Received successful response.");
 
-             SearchResponse searchResponse = response.body();
-             List<FlickrPhoto> flickrPhotos = searchResponse.getPhotos();
+             FlickrResponse flickrResponse = response.body();
+             List<FlickrPhoto> flickrPhotos = flickrResponse.getPhotos();
 
              List<Photo> appPhotos = new ArrayList<>(flickrPhotos.size());
 
@@ -55,7 +55,7 @@ public class FlickrGetPhotosCallback implements Callback<SearchResponse> {
     }
 
     @Override
-    public void onFailure(Call<SearchResponse> call, Throwable t) {
+    public void onFailure(Call<FlickrResponse> call, Throwable t) {
         Log.e(LOG_TAG, "Failure:");
         t.printStackTrace();
     }

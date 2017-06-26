@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import org.chyla.photoapp.Main.Model.Photo;
 import org.chyla.photoapp.R;
 
 import java.util.List;
@@ -20,15 +21,15 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
             imageButton = (ImageButton) view.findViewById(R.id.image_button);
         }
 
-        void setImageData(ImageData imageData) {
+        void setPhoto(Photo photo) {
         }
     }
 
-    public GalleryImageAdapter(List<ImageData> images) {
-        this.images = images;
+    public GalleryImageAdapter(List<Photo> photos) {
+        this.photos = photos;
     }
 
-    private List<ImageData> images;
+    private List<Photo> photos;
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -40,13 +41,13 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        ImageData image = images.get(position);
-        holder.setImageData(image);
+        Photo photo = photos.get(position);
+        holder.setPhoto(photo);
     }
 
     @Override
     public int getItemCount() {
-        return images.size();
+        return photos.size();
     }
 
 }

@@ -8,7 +8,7 @@ import retrofit2.http.Query;
 
 public interface FlickrAPI {
 
-    @GET("?method=flickr.photos.search")
+    @GET("?method=flickr.photos.search&extras=description")
     Call<FlickrResponse> getPhotosByTags(@Query("api_key") String apiKey,
                                          @Query("tags") String allTags);
 

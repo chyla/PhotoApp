@@ -1,6 +1,7 @@
 package org.chyla.photoapp.Main.Repository.detail.objects;
 
 import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import java.net.MalformedURLException;
@@ -15,7 +16,7 @@ public class FlickrPhoto {
     @Attribute(name = "title")
     String title;
 
-    @Attribute(name = "description", required = false)
+    @Element(name = "description", required = false)
     String description;
 
     @Attribute(name = "secret")

@@ -17,8 +17,8 @@ import retrofit2.Response;
 
 public class FlickrGetPhotosCallback implements Callback<FlickrResponse> {
 
-    private static final String LOG_TAG = "FlickrGetPhotosCallback";
-    private InspectPhotosCallback callback;
+    private final static String LOG_TAG = "FlickrGetPhotosCallback";
+    private final InspectPhotosCallback callback;
 
     public FlickrGetPhotosCallback(InspectPhotosCallback callback) {
         this.callback = callback;
@@ -29,16 +29,16 @@ public class FlickrGetPhotosCallback implements Callback<FlickrResponse> {
          if (response.isSuccessful()) {
              Log.i(LOG_TAG, "Received successful response.");
 
-             FlickrResponse flickrResponse = response.body();
-             List<FlickrPhoto> flickrPhotos = flickrResponse.getPhotos();
+             final FlickrResponse flickrResponse = response.body();
+             final List<FlickrPhoto> flickrPhotos = flickrResponse.getPhotos();
 
              List<Photo> appPhotos = new ArrayList<>(flickrPhotos.size());
 
-             for (FlickrPhoto flickrPhoto : flickrPhotos) {
+             for (final FlickrPhoto flickrPhoto : flickrPhotos) {
                  try {
-                     Photo photo =  new Photo(flickrPhoto.getTitle(),
-                                              flickrPhoto.getDescription(),
-                                              flickrPhoto.getUrl());
+                     final Photo photo = new Photo(flickrPhoto.getTitle(),
+                                                   flickrPhoto.getDescription(),
+                                                   flickrPhoto.getUrl());
                      appPhotos.add(photo);
                  } catch (MalformedURLException e) {
                      Log.e(LOG_TAG, "Error while creating app photo URL...");

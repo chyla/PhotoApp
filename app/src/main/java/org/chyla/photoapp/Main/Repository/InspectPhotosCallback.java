@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface InspectPhotosCallback {
 
-    void inspectPhotosCallback(List<Photo> photos);
+    void inspectPhotosCallback(final List<Photo> photos);
 
 }

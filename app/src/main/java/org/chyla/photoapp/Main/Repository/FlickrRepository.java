@@ -35,8 +35,8 @@ public class FlickrRepository implements InspectPhotosRepository {
     }
 
     @Override
-    public void getPhotosByTags(List<String> tags, InspectPhotosCallback callback) {
-        String allTags = convertTagsToString(tags);
+    public void getPhotosByTags(final List<String> tags, InspectPhotosCallback callback) {
+        final String allTags = convertTagsToString(tags);
 
         Log.i(LOG_TAG, "Looking for photos with tags: " + allTags);
 
@@ -44,10 +44,10 @@ public class FlickrRepository implements InspectPhotosRepository {
         call.enqueue(new FlickrGetPhotosCallback(callback));
     }
 
-    private String convertTagsToString(List<String> tags) {
+    private String convertTagsToString(final List<String> tags) {
         String allTags = "";
 
-        for (String tag : tags) {
+        for (final String tag : tags) {
             allTags = allTags + tag + ",";
         }
 

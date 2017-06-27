@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main;
+package org.chyla.photoapp.Main.InspectPhotos.GalleryFragment;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.chyla.photoapp.Main.Gallery.GalleryImageAdapter;
 import org.chyla.photoapp.Main.Model.Photo;
+import org.chyla.photoapp.Main.InspectPhotos.GalleryFragment.detail.GalleryPhotoAdapter;
 import org.chyla.photoapp.R;
 
 import java.util.LinkedList;
@@ -19,7 +19,7 @@ import java.util.List;
 public class GalleryFragment extends Fragment {
 
     private RecyclerView.LayoutManager layoutManager;
-    private GalleryImageAdapter adapter;
+    private GalleryPhotoAdapter adapter;
     private RecyclerView recyclerView;
     private List<Photo> photos;
 
@@ -54,7 +54,7 @@ public class GalleryFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         layoutManager = new GridLayoutManager(context.getApplicationContext(), 3);
-        adapter = new GalleryImageAdapter(photos);
+        adapter = new GalleryPhotoAdapter(photos);
     }
 
     @Override

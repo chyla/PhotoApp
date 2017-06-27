@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.Gallery;
+package org.chyla.photoapp.Main.InspectPhotos.GalleryFragment.detail;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +14,7 @@ import org.chyla.photoapp.R;
 
 import java.util.List;
 
-public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapter.MyViewHolder> {
+public class GalleryPhotoAdapter extends RecyclerView.Adapter<GalleryPhotoAdapter.MyViewHolder> {
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private final static String LOG_TAG = "MyViewHolder";
@@ -32,7 +32,7 @@ public class GalleryImageAdapter extends RecyclerView.Adapter<GalleryImageAdapte
         }
     }
 
-    public GalleryImageAdapter(List<Photo> photos) {
+    public GalleryPhotoAdapter(List<Photo> photos) {
         this.photos = photos;
     }
 

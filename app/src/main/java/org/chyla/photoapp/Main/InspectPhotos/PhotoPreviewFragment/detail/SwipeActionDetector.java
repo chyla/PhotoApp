@@ -1,15 +1,15 @@
-package org.chyla.photoapp.Main.InspectedPhotoPreviewFragment.detail;
+package org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.detail;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
-import org.chyla.photoapp.Main.InspectedPhotoPreviewFragment.InspectedPhotoPreviewActionListener;
+import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewActionListener;
 
 public class SwipeActionDetector implements GestureDetector.OnGestureListener {
 
-    InspectedPhotoPreviewActionListener mListener;
+    PhotoPreviewActionListener mListener;
 
-    public SwipeActionDetector(InspectedPhotoPreviewActionListener listener) {
+    public SwipeActionDetector(PhotoPreviewActionListener listener) {
         mListener = listener;
     }
 

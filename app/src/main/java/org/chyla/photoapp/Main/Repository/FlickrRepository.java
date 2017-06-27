@@ -2,7 +2,7 @@ package org.chyla.photoapp.Main.Repository;
 
 import android.util.Log;
 
-import org.chyla.photoapp.Main.Repository.detail.FlickrAPI;
+import org.chyla.photoapp.Main.Repository.detail.FlickrService;
 import org.chyla.photoapp.Main.Repository.detail.FlickrGetPhotosCallback;
 import org.chyla.photoapp.Main.Repository.detail.objects.FlickrResponse;
 
@@ -17,8 +17,8 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 public class FlickrRepository implements InspectPhotosRepository {
 
     private static final String LOG_TAG = "FlickrRepository";
-    private static final String BASE_API_URL = "https://api.flickr.com/services/rest/";
-    private FlickrAPI api;
+    private static final String BASE_API_URL = "https://service.flickr.com/services/rest/";
+    private FlickrService service;
 
     public FlickrRepository() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -31,7 +31,7 @@ public class FlickrRepository implements InspectPhotosRepository {
                 .client(client)
                 .build();
 
-        api = retrofit.create(FlickrAPI.class);
+        service = retrofit.create(FlickrService.class);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FlickrRepository implements InspectPhotosRepository {
 
         Log.i(LOG_TAG, "Looking for photos with tags: " + allTags);
 
-        Call<FlickrResponse> call = api.getPhotosByTags("", allTags);
+        Call<FlickrResponse> call = service.getPhotosByTags("", allTags);
         call.enqueue(new FlickrGetPhotosCallback(callback));
     }
 

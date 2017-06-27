@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.InspectedPhotoPreviewFragment;
+package org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -9,16 +9,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.chyla.photoapp.Main.InspectedPhotoPreviewFragment.detail.SwipeActionDetector;
+import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.detail.SwipeActionDetector;
 import org.chyla.photoapp.R;
 
-public class InspectedPhotoPreviewFragment extends Fragment {
+public class PhotoPreviewFragment extends Fragment {
 
     private Context mContext;
     private GestureDetectorCompat mDetector;
-    private InspectedPhotoPreviewActionListener mSwipeListener;
+    private PhotoPreviewActionListener mSwipeListener;
 
-    public void setPhotoActionListener(InspectedPhotoPreviewActionListener listener) {
+    public void setPhotoActionListener(PhotoPreviewActionListener listener) {
         mSwipeListener = listener;
 
         createGestureDetectorCompat();

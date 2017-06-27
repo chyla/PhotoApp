@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main;
+package org.chyla.photoapp.Main.InspectPhotos;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -18,9 +18,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class InspectPhotosFragment extends Fragment {
+public class SearchPhotosFragment extends Fragment {
 
-    private final static String LOG_TAG = "InspectPhotosFragment";
+    private final static String LOG_TAG = "SearchPhotosFragment";
 
     private MainPresenter presenter;
 
@@ -30,7 +30,7 @@ public class InspectPhotosFragment extends Fragment {
     @BindView(R.id.edittext_tags)
     EditText tagsEditText;
 
-    public InspectPhotosFragment() {
+    public SearchPhotosFragment() {
     }
 
     public void setPresenter(final MainPresenter presenter) {

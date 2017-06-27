@@ -20,7 +20,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import org.chyla.photoapp.Login.LoginActivity;
+import org.chyla.photoapp.Main.InspectPhotos.SearchPhotosFragment;
 import org.chyla.photoapp.Main.Model.Photo;
+import org.chyla.photoapp.Main.InspectPhotos.GalleryFragment.GalleryFragment;
 import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.Main.Presenter.MainPresenterImpl;
 import org.chyla.photoapp.R;
@@ -116,7 +118,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_inspect_photos:
-                showInspectPhotosFragment();
+                showSearchPhotosFragment();
                 break;
 
             case R.id.nav_logout:
@@ -145,11 +147,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showGalleryFragment() {
-        showFragment(new GalleryFragment());
     }
 
-    private void showInspectPhotosFragment() {
-        InspectPhotosFragment fragment = new InspectPhotosFragment();
+    private void showSearchPhotosFragment() {
+        SearchPhotosFragment fragment = new SearchPhotosFragment();
         fragment.setPresenter(presenter);
         showFragment(fragment);
     }

@@ -3,8 +3,8 @@ package org.chyla.photoapp.Main.Presenter;
 import android.util.Log;
 
 import org.chyla.photoapp.Main.MainView;
-import org.chyla.photoapp.Main.Model.MainModel;
-import org.chyla.photoapp.Main.Model.MainModelImpl;
+import org.chyla.photoapp.Main.Model.InspectPhotosInteractor;
+import org.chyla.photoapp.Main.Model.InspectPhotosInteractorImpl;
 import org.chyla.photoapp.Main.Model.detail.Event.ShowInspectedPhotosEvent;
 import org.chyla.photoapp.Model.Authenticator.Authenticator;
 import org.chyla.photoapp.Model.Authenticator.AuthenticatorImpl;
@@ -20,12 +20,12 @@ public class MainPresenterImpl implements MainPresenter {
     private final static String LOG_TAG = "MainPresenterImpl";
 
     Authenticator authenticator;
-    MainModel model;
+    InspectPhotosInteractor model;
     MainView view;
 
     public MainPresenterImpl(MainView view) {
         authenticator = new AuthenticatorImpl();
-        model = new MainModelImpl();
+        model = new InspectPhotosInteractorImpl();
         this.view = view;
     }
 

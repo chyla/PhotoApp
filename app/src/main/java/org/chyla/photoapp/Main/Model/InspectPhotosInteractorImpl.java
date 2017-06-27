@@ -6,11 +6,11 @@ import org.chyla.photoapp.Main.Repository.InspectPhotosRepository;
 
 import java.util.List;
 
-public class MainModelImpl implements MainModel {
+public class InspectPhotosInteractorImpl implements InspectPhotosInteractor {
 
     private InspectPhotosRepository inspectPhotosRepository;
 
-    public MainModelImpl() {
+    public InspectPhotosInteractorImpl() {
         inspectPhotosRepository = new FlickrRepository();
     }
 

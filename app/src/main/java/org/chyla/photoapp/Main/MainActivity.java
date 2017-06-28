@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import org.chyla.photoapp.Login.LoginActivity;
+import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewFragment;
 import org.chyla.photoapp.Main.InspectPhotos.SearchPhotosFragment;
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.InspectPhotos.GalleryFragment.GalleryFragment;
@@ -150,6 +151,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void showInspectedPhoto(Photo photo) {
         Log.d(LOG_TAG, "Inspecting photo: " + photo.getUrl().toString());
+
+        PhotoPreviewFragment fragment = new PhotoPreviewFragment();
+        fragment.setPhoto(photo);
+        showFragment(fragment);
     }
 
     private void showGalleryFragment() {

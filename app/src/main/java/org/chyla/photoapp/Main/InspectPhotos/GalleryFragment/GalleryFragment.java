@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.InspectPhotos.GalleryFragment.detail.GalleryPhotoAdapter;
+import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.R;
 
 import java.util.LinkedList;
@@ -18,10 +19,11 @@ import java.util.List;
 
 public class GalleryFragment extends Fragment {
 
+    private final List<Photo> photos;
     private RecyclerView.LayoutManager layoutManager;
     private GalleryPhotoAdapter adapter;
     private RecyclerView recyclerView;
-    private List<Photo> photos;
+    private MainPresenter presenter;
 
     public GalleryFragment() {
         photos = new LinkedList<>();
@@ -33,6 +35,10 @@ public class GalleryFragment extends Fragment {
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
+    }
+
+    public void setPresenter(MainPresenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
@@ -54,7 +60,7 @@ public class GalleryFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         layoutManager = new GridLayoutManager(context.getApplicationContext(), 3);
-        adapter = new GalleryPhotoAdapter(photos);
+        adapter = new GalleryPhotoAdapter(presenter, photos);
     }
 
     @Override

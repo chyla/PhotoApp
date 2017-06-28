@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import com.squareup.picasso.Picasso;
 
 import org.chyla.photoapp.Main.Model.objects.Photo;
+import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.R;
 
 import java.util.List;
@@ -18,25 +19,35 @@ public class GalleryPhotoAdapter extends RecyclerView.Adapter<GalleryPhotoAdapte
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private final static String LOG_TAG = "MyViewHolder";
-        private ImageButton imageButton;
+        private final ImageButton imageButton;
 
-        public MyViewHolder(View view) {
+        public MyViewHolder(final View view) {
             super(view);
             imageButton = (ImageButton) view.findViewById(R.id.image_button);
         }
 
-        void setPhoto(Photo photo) {
+        void setPhoto(final Photo photo) {
+            imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    Log.d(LOG_TAG, "Photo clicked (URL: " + photo.getUrl().toString() + ")\"");
+                    presenter.showInspectedPhoto(photo);
+                }
+            });
+
             String url = photo.getUrl().toString();
             Log.d(LOG_TAG, "Displaying photo: " + url);
             Picasso.with(imageButton.getContext()).load(url).into(imageButton);
         }
     }
 
-    public GalleryPhotoAdapter(List<Photo> photos) {
+    private final MainPresenter presenter;
+    private final List<Photo> photos;
+
+    public GalleryPhotoAdapter(final MainPresenter presenter, final List<Photo> photos) {
+        this.presenter = presenter;
         this.photos = photos;
     }
-
-    private List<Photo> photos;
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

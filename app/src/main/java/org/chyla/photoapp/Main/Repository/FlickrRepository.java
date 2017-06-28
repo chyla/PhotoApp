@@ -17,7 +17,7 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 public class FlickrRepository implements InspectPhotosRepository {
 
     private static final String LOG_TAG = "FlickrRepository";
-    private static final String BASE_API_URL = "https://service.flickr.com/services/rest/";
+    private static final String BASE_API_URL = "https://api.flickr.com/services/rest/";
     private FlickrService service;
 
     public FlickrRepository() {

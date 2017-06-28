@@ -141,9 +141,15 @@ public class MainActivity extends AppCompatActivity
         Log.d(LOG_TAG, "Received " + photos.size() + " photos to show.");
 
         GalleryFragment fragment = new GalleryFragment();
+        fragment.setPresenter(presenter);
         fragment.addPhotos(photos);
 
         showFragment(fragment);
+    }
+
+    @Override
+    public void showInspectedPhoto(Photo photo) {
+        Log.d(LOG_TAG, "Inspecting photo: " + photo.getUrl().toString());
     }
 
     private void showGalleryFragment() {

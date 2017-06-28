@@ -9,5 +9,6 @@ public interface MainView {
     void startLoginActivity();
 
     void showInspectedPhotosGallery(final List<Photo> photos);
+    void showInspectedPhoto(final Photo photo);
 
 }

@@ -6,6 +6,7 @@ import org.chyla.photoapp.Main.MainView;
 import org.chyla.photoapp.Main.Model.InspectPhotosInteractor;
 import org.chyla.photoapp.Main.Model.InspectPhotosInteractorImpl;
 import org.chyla.photoapp.Main.Model.detail.Event.ShowInspectedPhotosEvent;
+import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Model.Authenticator.Authenticator;
 import org.chyla.photoapp.Model.Authenticator.AuthenticatorImpl;
 import org.greenrobot.eventbus.EventBus;
@@ -40,6 +41,11 @@ public class MainPresenterImpl implements MainPresenter {
         final List<String> tagsList = splitTagsToList(tags);
 
         model.inspectPhotos(tagsList);
+    }
+
+    @Override
+    public void showInspectedPhoto(final Photo photo) {
+        view.showInspectedPhoto(photo);
     }
 
     @Override

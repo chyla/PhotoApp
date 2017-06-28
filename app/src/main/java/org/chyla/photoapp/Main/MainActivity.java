@@ -21,7 +21,7 @@ import android.widget.FrameLayout;
 
 import org.chyla.photoapp.Login.LoginActivity;
 import org.chyla.photoapp.Main.InspectPhotos.SearchPhotosFragment;
-import org.chyla.photoapp.Main.Model.Photo;
+import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.InspectPhotos.GalleryFragment.GalleryFragment;
 import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.Main.Presenter.MainPresenterImpl;

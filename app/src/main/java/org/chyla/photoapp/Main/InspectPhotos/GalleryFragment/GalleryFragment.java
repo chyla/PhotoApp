@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.chyla.photoapp.Main.Model.Photo;
+import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.InspectPhotos.GalleryFragment.detail.GalleryPhotoAdapter;
 import org.chyla.photoapp.R;
 

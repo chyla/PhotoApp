@@ -1,6 +1,6 @@
 package org.chyla.photoapp.Main.Model.detail;
 
-import org.chyla.photoapp.Main.Model.Photo;
+import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.Model.detail.Event.ShowInspectedPhotosEvent;
 import org.chyla.photoapp.Main.Repository.GetPhotosCallback;
 import org.greenrobot.eventbus.EventBus;

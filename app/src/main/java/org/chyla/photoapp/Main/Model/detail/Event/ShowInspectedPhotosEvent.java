@@ -1,6 +1,6 @@
 package org.chyla.photoapp.Main.Model.detail.Event;
 
-import org.chyla.photoapp.Main.Model.Photo;
+import org.chyla.photoapp.Main.Model.objects.Photo;
 
 import java.util.List;
 

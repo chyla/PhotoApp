@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.Model;
+package org.chyla.photoapp.Main.Model.objects;
 
 import android.support.annotation.Nullable;
 

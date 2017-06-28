@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 
 import com.squareup.picasso.Picasso;
 
-import org.chyla.photoapp.Main.Model.Photo;
+import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.R;
 
 import java.util.List;

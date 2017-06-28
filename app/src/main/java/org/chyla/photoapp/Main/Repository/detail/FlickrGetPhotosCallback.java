@@ -2,7 +2,7 @@ package org.chyla.photoapp.Main.Repository.detail;
 
 import android.util.Log;
 
-import org.chyla.photoapp.Main.Model.Photo;
+import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.Repository.GetPhotosCallback;
 import org.chyla.photoapp.Main.Repository.detail.objects.FlickrPhoto;
 import org.chyla.photoapp.Main.Repository.detail.objects.FlickrResponse;

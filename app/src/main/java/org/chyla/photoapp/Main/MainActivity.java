@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import org.chyla.photoapp.Login.LoginActivity;
+import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewActionListener;
 import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewFragment;
 import org.chyla.photoapp.Main.InspectPhotos.SearchPhotosFragment;
 import org.chyla.photoapp.Main.Model.objects.Photo;
@@ -34,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainView {
+        implements NavigationView.OnNavigationItemSelectedListener, MainView, PhotoPreviewActionListener {
 
     private final static String LOG_TAG = "MainActivity";
 
@@ -154,6 +155,7 @@ public class MainActivity extends AppCompatActivity
 
         PhotoPreviewFragment fragment = new PhotoPreviewFragment();
         fragment.setPhoto(photo);
+        fragment.setPhotoActionListener(this);
         showFragment(fragment);
     }
 
@@ -184,6 +186,16 @@ public class MainActivity extends AppCompatActivity
     protected void onStop() {
         presenter.onStop();
         super.onStop();
+    }
+
+    @Override
+    public void onPhotoSave(final Photo photo) {
+        Log.d(LOG_TAG, "onPhotoSave call with: " + photo.getUrl());
+    }
+
+    @Override
+    public void onPhotoDismiss() {
+        Log.d(LOG_TAG, "onPhotoDismiss call");
     }
 
 }

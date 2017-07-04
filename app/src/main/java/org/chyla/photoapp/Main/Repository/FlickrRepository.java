@@ -18,9 +18,12 @@ public class FlickrRepository implements InspectPhotosRepository {
 
     private static final String LOG_TAG = "FlickrRepository";
     private static final String BASE_API_URL = "https://api.flickr.com/services/rest/";
+    private final String API_KEY;
     private FlickrService service;
 
-    public FlickrRepository() {
+    public FlickrRepository(final String api_key) {
+        API_KEY = api_key;
+
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -40,7 +43,7 @@ public class FlickrRepository implements InspectPhotosRepository {
 
         Log.i(LOG_TAG, "Looking for photos with tags: " + allTags);
 
-        Call<FlickrResponse> call = service.getPhotosByTags("", allTags);
+        Call<FlickrResponse> call = service.getPhotosByTags(API_KEY, allTags);
         call.enqueue(new FlickrGetPhotosCallback(callback));
     }
 

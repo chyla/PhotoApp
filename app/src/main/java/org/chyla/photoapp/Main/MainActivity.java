@@ -20,15 +20,21 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import org.chyla.photoapp.Login.LoginActivity;
+import org.chyla.photoapp.Main.Configuration.FlickrPropertyReader;
 import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewActionListener;
 import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewFragment;
 import org.chyla.photoapp.Main.InspectPhotos.SearchPhotosFragment;
+import org.chyla.photoapp.Main.Model.InspectPhotosInteractor;
+import org.chyla.photoapp.Main.Model.InspectPhotosInteractorImpl;
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.InspectPhotos.GalleryFragment.GalleryFragment;
 import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.Main.Presenter.MainPresenterImpl;
+import org.chyla.photoapp.Main.Repository.FlickrRepository;
+import org.chyla.photoapp.Main.Repository.InspectPhotosRepository;
 import org.chyla.photoapp.R;
 
+import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -56,7 +62,19 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        presenter = new MainPresenterImpl(this);
+        String flickrApiKey = null;
+
+        try {
+            FlickrPropertyReader flickrPropertyReader = new FlickrPropertyReader(this);
+            flickrApiKey = flickrPropertyReader.getApiKey();
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Can't open flickr property file.");
+            e.printStackTrace();
+        }
+
+        InspectPhotosRepository inspectPhotosRepository = new FlickrRepository(flickrApiKey);
+        InspectPhotosInteractor inspectPhotosInteractor = new InspectPhotosInteractorImpl(inspectPhotosRepository);
+        presenter = new MainPresenterImpl(this, inspectPhotosInteractor);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -8,10 +8,10 @@ import java.util.List;
 
 public class InspectPhotosInteractorImpl implements InspectPhotosInteractor {
 
-    private InspectPhotosRepository inspectPhotosRepository;
+    private final InspectPhotosRepository inspectPhotosRepository;
 
-    public InspectPhotosInteractorImpl() {
-        inspectPhotosRepository = new FlickrRepository();
+    public InspectPhotosInteractorImpl(InspectPhotosRepository repository) {
+        inspectPhotosRepository = repository;
     }
 
     @Override

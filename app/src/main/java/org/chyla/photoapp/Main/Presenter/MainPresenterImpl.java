@@ -4,7 +4,6 @@ import android.util.Log;
 
 import org.chyla.photoapp.Main.MainView;
 import org.chyla.photoapp.Main.Model.InspectPhotosInteractor;
-import org.chyla.photoapp.Main.Model.InspectPhotosInteractorImpl;
 import org.chyla.photoapp.Main.Model.detail.Event.ShowInspectedPhotosEvent;
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Model.Authenticator.Authenticator;
@@ -21,12 +20,13 @@ public class MainPresenterImpl implements MainPresenter {
     private final static String LOG_TAG = "MainPresenterImpl";
 
     Authenticator authenticator;
-    InspectPhotosInteractor model;
+    InspectPhotosInteractor inspectPhotosInteractor;
     MainView view;
 
-    public MainPresenterImpl(MainView view) {
+    public MainPresenterImpl(MainView view,
+                             InspectPhotosInteractor inspectPhotosInteractor) {
         authenticator = new AuthenticatorImpl();
-        model = new InspectPhotosInteractorImpl();
+        this.inspectPhotosInteractor = inspectPhotosInteractor;
         this.view = view;
     }
 
@@ -40,7 +40,7 @@ public class MainPresenterImpl implements MainPresenter {
     public void inspectPhotos(final String tags) {
         final List<String> tagsList = splitTagsToList(tags);
 
-        model.inspectPhotos(tagsList);
+        inspectPhotosInteractor.inspectPhotos(tagsList);
     }
 
     @Override

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+         * https://stackoverflow.com/questions/37953476/android-how-to-get-a-content-uri-for-a-file-in-the-external-storage-public-d
+         * https://developer.android.com/reference/android/support/v4/content/FileProvider.html
+     -->
+    <external-path name="pictures" path="Android/data/org.chyla.photoapp/files/Pictures/" />
+</paths>

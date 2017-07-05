@@ -1,6 +1,6 @@
-package org.chyla.photoapp.Main.Repository.detail;
+package org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.Flickr.detail;
 
-import org.chyla.photoapp.Main.Repository.detail.objects.FlickrResponse;
+import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.Flickr.detail.objects.FlickrResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -1,11 +1,11 @@
-package org.chyla.photoapp.Main.Repository.detail;
+package org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.Flickr.detail;
 
 import android.util.Log;
 
 import org.chyla.photoapp.Main.Model.objects.Photo;
-import org.chyla.photoapp.Main.Repository.GetPhotosCallback;
-import org.chyla.photoapp.Main.Repository.detail.objects.FlickrPhoto;
-import org.chyla.photoapp.Main.Repository.detail.objects.FlickrResponse;
+import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.GetPhotosCallback;
+import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.Flickr.detail.objects.FlickrPhoto;
+import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.Flickr.detail.objects.FlickrResponse;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;

@@ -1,10 +1,12 @@
-package org.chyla.photoapp.Main.Repository;
+package org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.Flickr;
 
 import android.util.Log;
 
-import org.chyla.photoapp.Main.Repository.detail.FlickrService;
-import org.chyla.photoapp.Main.Repository.detail.FlickrGetPhotosCallback;
-import org.chyla.photoapp.Main.Repository.detail.objects.FlickrResponse;
+import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.CloudPhotosExplorerRepository;
+import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.GetPhotosCallback;
+import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.Flickr.detail.FlickrService;
+import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.Flickr.detail.FlickrGetPhotosCallback;
+import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.Flickr.detail.objects.FlickrResponse;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
-public class FlickrRepository implements InspectPhotosRepository {
+public class FlickrRepository implements CloudPhotosExplorerRepository {
 
     private static final String LOG_TAG = "FlickrRepository";
     private static final String BASE_API_URL = "https://api.flickr.com/services/rest/";

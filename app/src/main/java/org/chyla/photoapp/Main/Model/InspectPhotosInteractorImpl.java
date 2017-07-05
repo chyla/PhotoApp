@@ -1,24 +1,23 @@
 package org.chyla.photoapp.Main.Model;
 
 import org.chyla.photoapp.Main.Model.detail.InspectPhotosCallback;
-import org.chyla.photoapp.Main.Repository.FlickrRepository;
-import org.chyla.photoapp.Main.Repository.InspectPhotosRepository;
+import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.CloudPhotosExplorerRepository;
 
 import java.util.List;
 
 public class InspectPhotosInteractorImpl implements InspectPhotosInteractor {
 
-    private final InspectPhotosRepository inspectPhotosRepository;
+    private final CloudPhotosExplorerRepository repository;
 
-    public InspectPhotosInteractorImpl(InspectPhotosRepository repository) {
-        inspectPhotosRepository = repository;
+    public InspectPhotosInteractorImpl(CloudPhotosExplorerRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public void inspectPhotos(List<String> tags) {
         InspectPhotosCallback callback = new InspectPhotosCallback();
 
-        inspectPhotosRepository.getPhotosByTags(tags, callback);
+        repository.getPhotosByTags(tags, callback);
     }
 
 }

@@ -39,8 +39,8 @@ import org.chyla.photoapp.Main.Model.InspectPhotosInteractorImpl;
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.Main.Presenter.MainPresenterImpl;
-import org.chyla.photoapp.Main.Repository.FlickrRepository;
-import org.chyla.photoapp.Main.Repository.InspectPhotosRepository;
+import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.CloudPhotosExplorerRepository;
+import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.Flickr.FlickrRepository;
 import org.chyla.photoapp.R;
 
 import java.io.File;
@@ -87,8 +87,8 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        InspectPhotosRepository inspectPhotosRepository = new FlickrRepository(flickrApiKey);
-        InspectPhotosInteractor inspectPhotosInteractor = new InspectPhotosInteractorImpl(inspectPhotosRepository);
+        CloudPhotosExplorerRepository cloudPhotosExplorerRepository = new FlickrRepository(flickrApiKey);
+        InspectPhotosInteractor inspectPhotosInteractor = new InspectPhotosInteractorImpl(cloudPhotosExplorerRepository);
         presenter = new MainPresenterImpl(this, inspectPhotosInteractor);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.Repository;
+package org.chyla.photoapp.Main.Repository.CloudPhotosExplorer;
 
 import org.chyla.photoapp.Main.Model.objects.Photo;
 

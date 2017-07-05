@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.Repository.detail.objects;
+package org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.Flickr.detail.objects;
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;

@@ -1,16 +1,17 @@
-package org.chyla.photoapp.Main.Repository;
+package org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao;
 
 import android.content.Context;
 import android.util.Log;
 
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.Model.objects.User;
-import org.chyla.photoapp.Main.Repository.detail.greendao.objects.DaoMaster;
-import org.chyla.photoapp.Main.Repository.detail.greendao.objects.DaoSession;
-import org.chyla.photoapp.Main.Repository.detail.greendao.objects.DbPhoto;
-import org.chyla.photoapp.Main.Repository.detail.greendao.objects.DbPhotoDao;
-import org.chyla.photoapp.Main.Repository.detail.greendao.objects.DbUser;
-import org.chyla.photoapp.Main.Repository.detail.greendao.objects.DbUserDao;
+import org.chyla.photoapp.Main.Repository.LocalDatabase.DatabaseRepository;
+import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail.DaoMaster;
+import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail.DaoSession;
+import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail.DbPhoto;
+import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail.DbPhotoDao;
+import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail.DbUser;
+import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail.DbUserDao;
 import org.greenrobot.greendao.database.Database;
 
 import java.net.MalformedURLException;

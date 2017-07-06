@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.chyla.photoapp.Main.Model.objects.User;
 import org.chyla.photoapp.Model.Authenticator.Event.ErrorEvent;
 import org.chyla.photoapp.Model.Authenticator.Event.SuccessEvent;
 import org.greenrobot.eventbus.EventBus;
@@ -76,6 +77,14 @@ public class LoginRepositoryImpl implements LoginRepository {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         return user != null;
+    }
+
+    @Override
+    public User getLoggedUserInfo() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser fbUser = auth.getCurrentUser();
+
+        return new User(fbUser.getUid(), fbUser.getEmail());
     }
 
 }

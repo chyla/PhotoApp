@@ -37,6 +37,8 @@ import org.chyla.photoapp.Main.InspectPhotos.SearchPhotosFragment;
 import org.chyla.photoapp.Main.Model.InspectPhotosInteractor;
 import org.chyla.photoapp.Main.Model.InspectPhotosInteractorImpl;
 import org.chyla.photoapp.Main.Model.objects.Photo;
+import org.chyla.photoapp.Main.NewPhoto.NewPhotoCallback;
+import org.chyla.photoapp.Main.NewPhoto.NewPhotoDetailsFragment;
 import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.Main.Presenter.MainPresenterImpl;
 import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.CloudPhotosExplorerRepository;
@@ -54,13 +56,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainView, PhotoPreviewActionListener, ActivityCompat.OnRequestPermissionsResultCallback {
+        implements NavigationView.OnNavigationItemSelectedListener,MainView,
+        PhotoPreviewActionListener, ActivityCompat.OnRequestPermissionsResultCallback, NewPhotoCallback {
 
     private final static String LOG_TAG = "MainActivity";
     private final static int REQUEST_IMAGE_CAPTURE = 10;
     private final static int PERMISSIONS_REQUEST_PHOTO = 20;
 
     MainPresenter presenter;
+
+    private String newPhotoPath;
 
     @BindView(R.id.fragment_container)
     FrameLayout fragmentContainer;
@@ -227,6 +232,8 @@ public class MainActivity extends AppCompatActivity
             try {
                 Log.i(LOG_TAG, "Photo app found, starting activity...");
                 File photoFile = getPhotoFile();
+                newPhotoPath = photoFile.getPath();
+
                 Uri photoUri = FileProvider.getUriForFile(this, "org.chyla.photoapp.fileprovider", photoFile);
 
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
@@ -259,7 +266,15 @@ public class MainActivity extends AppCompatActivity
         if (resultCode == RESULT_OK && requestCode == REQUEST_IMAGE_CAPTURE) {
             Log.d(LOG_TAG, "Succesfully returned from Photo app.");
 
+            NewPhotoDetailsFragment fragment = new NewPhotoDetailsFragment();
+            fragment.setNewPhotoCallback(this);
+            showFragment(fragment);
         }
+    }
+
+    @Override
+    public void onCreateNewPhotoCallback(final String title, final String description) {
+        Log.i(LOG_TAG, "Creating new photo (" + title + ", " + description + ", " + newPhotoPath + ")");
     }
 
     @Override

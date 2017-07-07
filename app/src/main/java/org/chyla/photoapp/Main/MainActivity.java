@@ -39,6 +39,7 @@ import org.chyla.photoapp.Main.Model.InspectPhotosInteractorImpl;
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.NewPhoto.NewPhotoCallback;
 import org.chyla.photoapp.Main.NewPhoto.NewPhotoDetailsFragment;
+import org.chyla.photoapp.Main.PhotoView.PhotoViewFragment;
 import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.Main.Presenter.MainPresenterImpl;
 import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.CloudPhotosExplorerRepository;
@@ -153,6 +154,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
+            case R.id.nav_main:
+                break;
+
             case R.id.nav_gallery:
                 showGalleryFragment();
                 break;
@@ -178,6 +182,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void startLoginActivity() {
         startActivity(new Intent(this, LoginActivity.class));
+    }
+
+
+    @Override
+    public void showLastPhoto(final Photo photo) {
+        PhotoViewFragment fragment = new PhotoViewFragment();
+        fragment.setPhoto(photo);
+        showFragment(fragment);
     }
 
     @Override

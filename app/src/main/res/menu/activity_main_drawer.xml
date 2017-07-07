@@ -3,7 +3,7 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_main"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/main_screen"
             android:checked="true"/>

@@ -44,7 +44,7 @@
             android:textSize="18sp" />
 
         <ImageView
-            android:id="@+id/pimage_hoto"
+            android:id="@+id/image_photo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:srcCompat="@mipmap/ic_launcher" />

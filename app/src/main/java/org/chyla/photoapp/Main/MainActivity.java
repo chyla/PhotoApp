@@ -29,7 +29,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import org.chyla.photoapp.Login.LoginActivity;
+import org.chyla.photoapp.Main.Configuration.CloudinaryPropertyReader;
 import org.chyla.photoapp.Main.Configuration.FlickrPropertyReader;
+import org.chyla.photoapp.Main.Configuration.detail.CloudinaryConfig;
 import org.chyla.photoapp.Main.GalleryFragment.GalleryCallback;
 import org.chyla.photoapp.Main.GalleryFragment.GalleryFragment;
 import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewActionListener;
@@ -37,6 +39,8 @@ import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewFr
 import org.chyla.photoapp.Main.InspectPhotos.SearchPhotosFragment;
 import org.chyla.photoapp.Main.Model.InspectPhotosInteractor;
 import org.chyla.photoapp.Main.Model.InspectPhotosInteractorImpl;
+import org.chyla.photoapp.Main.Model.NewPhotoInteractor;
+import org.chyla.photoapp.Main.Model.NewPhotoInteractorImpl;
 import org.chyla.photoapp.Main.Model.UserGalleryInteractor;
 import org.chyla.photoapp.Main.Model.UserGalleryInteractorImpl;
 import org.chyla.photoapp.Main.Model.objects.Photo;
@@ -45,6 +49,10 @@ import org.chyla.photoapp.Main.NewPhoto.NewPhotoDetailsFragment;
 import org.chyla.photoapp.Main.PhotoView.PhotoViewFragment;
 import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.Main.Presenter.MainPresenterImpl;
+import org.chyla.photoapp.Main.Repository.CloudDatabase.CloudDatabaseRepository;
+import org.chyla.photoapp.Main.Repository.CloudDatabase.Firebase.FirebaseRepository;
+import org.chyla.photoapp.Main.Repository.CloudImageStorage.CloudStorageRepository;
+import org.chyla.photoapp.Main.Repository.CloudImageStorage.Cloudinary.CloudinaryRepository;
 import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.CloudPhotosExplorerRepository;
 import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.Flickr.FlickrRepository;
 import org.chyla.photoapp.Main.Repository.LocalDatabase.DatabaseRepository;
@@ -65,7 +73,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,MainView,
-        PhotoPreviewActionListener, ActivityCompat.OnRequestPermissionsResultCallback, NewPhotoCallback {
+        PhotoPreviewActionListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private final static String LOG_TAG = "MainActivity";
     private final static int REQUEST_IMAGE_CAPTURE = 10;
@@ -100,35 +108,45 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        Authenticator authenticator = new AuthenticatorImpl();
+        try {
+            CloudinaryPropertyReader cloudinaryPropertyReader = new CloudinaryPropertyReader(this);
 
-        DatabaseRepository databaseRepository = new GreenDaoRepository(getApplicationContext());
-        UserGalleryInteractor userGalleryInteractor = new UserGalleryInteractorImpl(databaseRepository, authenticator);
+            Authenticator authenticator = new AuthenticatorImpl();
 
-        CloudPhotosExplorerRepository cloudPhotosExplorerRepository = new FlickrRepository(flickrApiKey);
-        InspectPhotosInteractor inspectPhotosInteractor = new InspectPhotosInteractorImpl(cloudPhotosExplorerRepository);
+            CloudStorageRepository cloudStorageRepository = new CloudinaryRepository(cloudinaryPropertyReader.getConfig());
+            CloudDatabaseRepository cloudDatabaseRepository = new FirebaseRepository();
+            DatabaseRepository databaseRepository = new GreenDaoRepository(getApplicationContext());
+            CloudPhotosExplorerRepository cloudPhotosExplorerRepository = new FlickrRepository(flickrApiKey);
 
-        presenter = new MainPresenterImpl(this, inspectPhotosInteractor, userGalleryInteractor);
+            NewPhotoInteractor newPhotoInteractor = new NewPhotoInteractorImpl(cloudStorageRepository, cloudDatabaseRepository, databaseRepository, authenticator);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+            UserGalleryInteractor userGalleryInteractor = new UserGalleryInteractorImpl(databaseRepository, authenticator);
+            InspectPhotosInteractor inspectPhotosInteractor = new InspectPhotosInteractorImpl(cloudPhotosExplorerRepository);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+            presenter = new MainPresenterImpl(this, newPhotoInteractor, inspectPhotosInteractor, userGalleryInteractor);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.setDrawerListener(toggle);
+            toggle.syncState();
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -199,6 +217,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showPhoto(final Photo photo) {
+        Log.d(LOG_TAG, "Received photo '" + photo.getTitle() + "' to show.");
+
         PhotoViewFragment fragment = new PhotoViewFragment();
         fragment.setPhoto(photo);
         showFragment(fragment);
@@ -312,14 +332,14 @@ public class MainActivity extends AppCompatActivity
             Log.d(LOG_TAG, "Succesfully returned from Photo app.");
 
             NewPhotoDetailsFragment fragment = new NewPhotoDetailsFragment();
-            fragment.setNewPhotoCallback(this);
+            fragment.setNewPhotoCallback(new NewPhotoCallback() {
+                @Override
+                public void onCreateNewPhotoCallback(final String title, final String description) {
+                    presenter.addNewPhoto(title, description, newPhotoPath);
+                }
+            });
             showFragment(fragment);
         }
-    }
-
-    @Override
-    public void onCreateNewPhotoCallback(final String title, final String description) {
-        Log.i(LOG_TAG, "Creating new photo (" + title + ", " + description + ", " + newPhotoPath + ")");
     }
 
     @Override

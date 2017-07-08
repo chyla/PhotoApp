@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -20,6 +21,8 @@ public class PhotoViewFragment extends Fragment {
 
     private Photo photo;
     private Context context;
+    private TextView titleText;
+    private TextView descriptionText;
     private ImageView imageView;
     private View noPhotoInfo;
     private View photoContent;
@@ -45,7 +48,10 @@ public class PhotoViewFragment extends Fragment {
 
         noPhotoInfo = (View) view.findViewById(R.id.no_photo);
         photoContent = (View) view.findViewById(R.id.photo_content);
-        imageView = (ImageView) view.findViewById(R.id.imageView);
+
+        titleText = (TextView) view.findViewById(R.id.text_title);
+        descriptionText = (TextView) view.findViewById(R.id.text_description);
+        imageView = (ImageView) view.findViewById(R.id.image_photo);
 
         updatePhotoView();
 
@@ -66,11 +72,16 @@ public class PhotoViewFragment extends Fragment {
     private void updatePhotoView() {
         if (imageView != null && photo != null) {
             Log.d(LOG_TAG, "Updating photo view...");
+
+            titleText.setText(photo.getTitle());
+            descriptionText.setText(photo.getDescription());
             Picasso.with(imageView.getContext()).load(photo.getUrl().toString()).into(imageView);
 
             showPhotoContent();
         }
         else {
+            Log.d(LOG_TAG, "No photo to view...");
+
             showNoPhotoInfo();
         }
     }

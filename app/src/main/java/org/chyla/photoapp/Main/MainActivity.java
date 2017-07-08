@@ -37,6 +37,8 @@ import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewFr
 import org.chyla.photoapp.Main.InspectPhotos.SearchPhotosFragment;
 import org.chyla.photoapp.Main.Model.InspectPhotosInteractor;
 import org.chyla.photoapp.Main.Model.InspectPhotosInteractorImpl;
+import org.chyla.photoapp.Main.Model.UserGalleryInteractor;
+import org.chyla.photoapp.Main.Model.UserGalleryInteractorImpl;
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.NewPhoto.NewPhotoCallback;
 import org.chyla.photoapp.Main.NewPhoto.NewPhotoDetailsFragment;
@@ -45,6 +47,10 @@ import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.Main.Presenter.MainPresenterImpl;
 import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.CloudPhotosExplorerRepository;
 import org.chyla.photoapp.Main.Repository.CloudPhotosExplorer.Flickr.FlickrRepository;
+import org.chyla.photoapp.Main.Repository.LocalDatabase.DatabaseRepository;
+import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.GreenDaoRepository;
+import org.chyla.photoapp.Model.Authenticator.Authenticator;
+import org.chyla.photoapp.Model.Authenticator.AuthenticatorImpl;
 import org.chyla.photoapp.R;
 
 import java.io.File;
@@ -94,9 +100,15 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
+        Authenticator authenticator = new AuthenticatorImpl();
+
+        DatabaseRepository databaseRepository = new GreenDaoRepository(getApplicationContext());
+        UserGalleryInteractor userGalleryInteractor = new UserGalleryInteractorImpl(databaseRepository, authenticator);
+
         CloudPhotosExplorerRepository cloudPhotosExplorerRepository = new FlickrRepository(flickrApiKey);
         InspectPhotosInteractor inspectPhotosInteractor = new InspectPhotosInteractorImpl(cloudPhotosExplorerRepository);
-        presenter = new MainPresenterImpl(this, inspectPhotosInteractor);
+
+        presenter = new MainPresenterImpl(this, inspectPhotosInteractor, userGalleryInteractor);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -186,7 +198,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void showLastPhoto(final Photo photo) {
+    public void showPhoto(final Photo photo) {
         PhotoViewFragment fragment = new PhotoViewFragment();
         fragment.setPhoto(photo);
         showFragment(fragment);

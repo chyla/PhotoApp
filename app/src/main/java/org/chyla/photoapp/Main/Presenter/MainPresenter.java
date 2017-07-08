@@ -10,6 +10,8 @@ public interface MainPresenter {
 
     void logoutUser();
 
+    void showPhoto(final Photo photo);
+
     void inspectPhotos(final String tags);
     void showInspectedPhoto(final Photo photo);
     void onShowInspectedPhotosEvent(final ShowInspectedPhotosEvent event);

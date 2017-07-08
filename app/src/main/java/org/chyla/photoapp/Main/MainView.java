@@ -8,7 +8,7 @@ public interface MainView {
 
     void startLoginActivity();
 
-    void showLastPhoto(final Photo photo);
+    void showPhoto(final Photo photo);
     void showUserGallery(final List<Photo> photos);
     void showInspectedPhotosGallery(final List<Photo> photos);
     void showInspectedPhoto(final Photo photo);

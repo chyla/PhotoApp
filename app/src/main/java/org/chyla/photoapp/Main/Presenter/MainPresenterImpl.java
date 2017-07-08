@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.chyla.photoapp.Main.MainView;
 import org.chyla.photoapp.Main.Model.InspectPhotosInteractor;
+import org.chyla.photoapp.Main.Model.UserGalleryInteractor;
 import org.chyla.photoapp.Main.Model.detail.Event.ShowInspectedPhotosEvent;
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Model.Authenticator.Authenticator;
@@ -21,19 +22,27 @@ public class MainPresenterImpl implements MainPresenter {
 
     Authenticator authenticator;
     InspectPhotosInteractor inspectPhotosInteractor;
+    UserGalleryInteractor userGalleryInteractor;
     MainView view;
 
     public MainPresenterImpl(MainView view,
-                             InspectPhotosInteractor inspectPhotosInteractor) {
+                             InspectPhotosInteractor inspectPhotosInteractor,
+                             UserGalleryInteractor userGalleryInteractor) {
         authenticator = new AuthenticatorImpl();
-        this.inspectPhotosInteractor = inspectPhotosInteractor;
         this.view = view;
+        this.inspectPhotosInteractor = inspectPhotosInteractor;
+        this.userGalleryInteractor = userGalleryInteractor;
     }
 
     @Override
     public void logoutUser() {
         authenticator.logoutUser();
         view.startLoginActivity();
+    }
+
+    @Override
+    public void showPhoto(final Photo photo) {
+        view.showPhoto(photo);
     }
 
     @Override
@@ -66,7 +75,9 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void showUserGallery() {
+        List<Photo> photos = userGalleryInteractor.getUserPhotos();
 
+        view.showUserGallery(photos);
     }
 
     private List<String> splitTagsToList(final String tags) {

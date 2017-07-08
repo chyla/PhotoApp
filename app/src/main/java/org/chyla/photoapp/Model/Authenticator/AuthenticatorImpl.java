@@ -1,5 +1,6 @@
 package org.chyla.photoapp.Model.Authenticator;
 
+import org.chyla.photoapp.Main.Model.objects.User;
 import org.chyla.photoapp.Model.Authenticator.Event.ErrorEvent;
 import org.chyla.photoapp.Model.Authenticator.Event.SuccessEvent;
 import org.chyla.photoapp.Repository.Login.LoginRepository;
@@ -12,6 +13,11 @@ public class AuthenticatorImpl implements Authenticator {
 
     public AuthenticatorImpl() {
         repository = new LoginRepositoryImpl();
+    }
+
+    @Override
+    public User getLoggedUser() {
+        return repository.getLoggedUserInfo();
     }
 
     @Override

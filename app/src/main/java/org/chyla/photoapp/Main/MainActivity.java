@@ -30,7 +30,8 @@ import android.widget.FrameLayout;
 
 import org.chyla.photoapp.Login.LoginActivity;
 import org.chyla.photoapp.Main.Configuration.FlickrPropertyReader;
-import org.chyla.photoapp.Main.InspectPhotos.GalleryFragment.GalleryFragment;
+import org.chyla.photoapp.Main.GalleryFragment.GalleryCallback;
+import org.chyla.photoapp.Main.GalleryFragment.GalleryFragment;
 import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewActionListener;
 import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewFragment;
 import org.chyla.photoapp.Main.InspectPhotos.SearchPhotosFragment;
@@ -158,7 +159,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_gallery:
-                showGalleryFragment();
+                presenter.showUserGallery();
                 break;
 
             case R.id.nav_camera:
@@ -184,7 +185,6 @@ public class MainActivity extends AppCompatActivity
         startActivity(new Intent(this, LoginActivity.class));
     }
 
-
     @Override
     public void showLastPhoto(final Photo photo) {
         PhotoViewFragment fragment = new PhotoViewFragment();
@@ -193,11 +193,32 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void showUserGallery(List<Photo> photos) {
+        Log.d(LOG_TAG, "Received " + photos.size() + " photos to show.");
+
+        GalleryFragment fragment = new GalleryFragment();
+        fragment.setCallback(new GalleryCallback() {
+            @Override
+            public void onGalleryPhotoClicked(final Photo photo) {
+            }
+        });
+        fragment.addPhotos(photos);
+
+        showFragment(fragment);
+
+    }
+
+    @Override
     public void showInspectedPhotosGallery(final List<Photo> photos) {
         Log.d(LOG_TAG, "Received " + photos.size() + " photos to show.");
 
         GalleryFragment fragment = new GalleryFragment();
-        fragment.setPresenter(presenter);
+        fragment.setCallback(new GalleryCallback() {
+            @Override
+            public void onGalleryPhotoClicked(final Photo photo) {
+                presenter.showInspectedPhoto(photo);
+            }
+        });
         fragment.addPhotos(photos);
 
         showFragment(fragment);
@@ -301,9 +322,6 @@ public class MainActivity extends AppCompatActivity
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
                 break;
         }
-    }
-
-    private void showGalleryFragment() {
     }
 
     private void showSearchPhotosFragment() {

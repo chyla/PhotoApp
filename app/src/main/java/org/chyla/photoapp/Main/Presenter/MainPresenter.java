@@ -14,4 +14,5 @@ public interface MainPresenter {
     void showInspectedPhoto(final Photo photo);
     void onShowInspectedPhotosEvent(final ShowInspectedPhotosEvent event);
 
+    void showUserGallery();
 }

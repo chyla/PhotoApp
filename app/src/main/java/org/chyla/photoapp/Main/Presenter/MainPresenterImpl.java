@@ -64,6 +64,11 @@ public class MainPresenterImpl implements MainPresenter {
         view.showInspectedPhotosGallery(event.getPhotos());
     }
 
+    @Override
+    public void showUserGallery() {
+
+    }
+
     private List<String> splitTagsToList(final String tags) {
         Log.d(LOG_TAG, "Spliting tags...");
 

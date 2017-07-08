@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.InspectPhotos.GalleryFragment.detail;
+package org.chyla.photoapp.Main.GalleryFragment.detail;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,19 +9,19 @@ import android.widget.ImageButton;
 
 import com.squareup.picasso.Picasso;
 
+import org.chyla.photoapp.Main.GalleryFragment.GalleryCallback;
 import org.chyla.photoapp.Main.Model.objects.Photo;
-import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.R;
 
 import java.util.List;
 
 public class GalleryPhotoAdapter extends RecyclerView.Adapter<GalleryPhotoAdapter.MyViewHolder> {
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         private final static String LOG_TAG = "MyViewHolder";
         private final ImageButton imageButton;
 
-        public MyViewHolder(final View view) {
+        MyViewHolder(final View view) {
             super(view);
             imageButton = (ImageButton) view.findViewById(R.id.image_button);
         }
@@ -31,7 +31,7 @@ public class GalleryPhotoAdapter extends RecyclerView.Adapter<GalleryPhotoAdapte
                 @Override
                 public void onClick(final View v) {
                     Log.d(LOG_TAG, "Photo clicked (URL: " + photo.getUrl().toString() + ")\"");
-                    presenter.showInspectedPhoto(photo);
+                    callback.onGalleryPhotoClicked(photo);
                 }
             });
 
@@ -41,11 +41,11 @@ public class GalleryPhotoAdapter extends RecyclerView.Adapter<GalleryPhotoAdapte
         }
     }
 
-    private final MainPresenter presenter;
+    private final GalleryCallback callback;
     private final List<Photo> photos;
 
-    public GalleryPhotoAdapter(final MainPresenter presenter, final List<Photo> photos) {
-        this.presenter = presenter;
+    public GalleryPhotoAdapter(final GalleryCallback callback, final List<Photo> photos) {
+        this.callback = callback;
         this.photos = photos;
     }
 

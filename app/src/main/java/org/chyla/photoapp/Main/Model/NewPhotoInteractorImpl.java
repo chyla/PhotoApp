@@ -6,7 +6,6 @@ import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.Model.objects.User;
 import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.Main.Repository.CloudDatabase.CloudDatabaseRepository;
-import org.chyla.photoapp.Main.Repository.CloudDatabase.LastPhotoCallback;
 import org.chyla.photoapp.Main.Repository.CloudImageStorage.CloudStorageRepository;
 import org.chyla.photoapp.Main.Repository.CloudImageStorage.UploadImageCallback;
 import org.chyla.photoapp.Main.Repository.LocalDatabase.DatabaseRepository;

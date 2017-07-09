@@ -31,7 +31,6 @@ import android.widget.FrameLayout;
 import org.chyla.photoapp.Login.LoginActivity;
 import org.chyla.photoapp.Main.Configuration.CloudinaryPropertyReader;
 import org.chyla.photoapp.Main.Configuration.FlickrPropertyReader;
-import org.chyla.photoapp.Main.Configuration.detail.CloudinaryConfig;
 import org.chyla.photoapp.Main.GalleryFragment.GalleryCallback;
 import org.chyla.photoapp.Main.GalleryFragment.GalleryFragment;
 import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewActionListener;
@@ -39,6 +38,8 @@ import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewFr
 import org.chyla.photoapp.Main.InspectPhotos.SearchPhotosFragment;
 import org.chyla.photoapp.Main.Model.InspectPhotosInteractor;
 import org.chyla.photoapp.Main.Model.InspectPhotosInteractorImpl;
+import org.chyla.photoapp.Main.Model.LastPhotoInteractor;
+import org.chyla.photoapp.Main.Model.LastPhotoInteractorImpl;
 import org.chyla.photoapp.Main.Model.NewPhotoInteractor;
 import org.chyla.photoapp.Main.Model.NewPhotoInteractorImpl;
 import org.chyla.photoapp.Main.Model.UserGalleryInteractor;
@@ -118,12 +119,14 @@ public class MainActivity extends AppCompatActivity
             DatabaseRepository databaseRepository = new GreenDaoRepository(getApplicationContext());
             CloudPhotosExplorerRepository cloudPhotosExplorerRepository = new FlickrRepository(flickrApiKey);
 
+            LastPhotoInteractor lastPhotoInteractor = new LastPhotoInteractorImpl(authenticator, databaseRepository);
+
             NewPhotoInteractor newPhotoInteractor = new NewPhotoInteractorImpl(cloudStorageRepository, cloudDatabaseRepository, databaseRepository, authenticator);
 
             UserGalleryInteractor userGalleryInteractor = new UserGalleryInteractorImpl(databaseRepository, authenticator);
             InspectPhotosInteractor inspectPhotosInteractor = new InspectPhotosInteractorImpl(cloudPhotosExplorerRepository);
 
-            presenter = new MainPresenterImpl(this, newPhotoInteractor, inspectPhotosInteractor, userGalleryInteractor);
+            presenter = new MainPresenterImpl(this, authenticator, lastPhotoInteractor, newPhotoInteractor, inspectPhotosInteractor, userGalleryInteractor);
 
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -144,6 +147,8 @@ public class MainActivity extends AppCompatActivity
 
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
+
+            presenter.showLastPhoto();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -186,6 +191,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_main:
+                presenter.showLastPhoto();
                 break;
 
             case R.id.nav_gallery:
@@ -217,8 +223,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showPhoto(final Photo photo) {
-        Log.d(LOG_TAG, "Received photo '" + photo.getTitle() + "' to show.");
-
         PhotoViewFragment fragment = new PhotoViewFragment();
         fragment.setPhoto(photo);
         showFragment(fragment);

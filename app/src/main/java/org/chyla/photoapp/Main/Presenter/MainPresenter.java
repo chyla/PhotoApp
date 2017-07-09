@@ -10,6 +10,8 @@ public interface MainPresenter {
 
     void logoutUser();
 
+    void showLastPhoto();
+
     void addNewPhoto(final String title, final String description, final String path);
 
     void showPhoto(final Photo photo);

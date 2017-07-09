@@ -62,6 +62,8 @@ public class NewPhotoInteractorImpl implements NewPhotoInteractor {
 
         cloudDatabase.savePhoto(currentUser, photo);
         localDatabase.savePhoto(currentUser, photo);
+
+        localDatabase.saveLastPhoto(currentUser, photo);
     }
 
 }

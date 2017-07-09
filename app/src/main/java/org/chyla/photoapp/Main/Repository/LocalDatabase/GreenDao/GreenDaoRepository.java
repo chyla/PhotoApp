@@ -8,6 +8,8 @@ import org.chyla.photoapp.Main.Model.objects.User;
 import org.chyla.photoapp.Main.Repository.LocalDatabase.DatabaseRepository;
 import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail.DaoMaster;
 import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail.DaoSession;
+import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail.DbLastPhoto;
+import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail.DbLastPhotoDao;
 import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail.DbPhoto;
 import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail.DbPhotoDao;
 import org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail.DbUser;
@@ -31,6 +33,7 @@ public class GreenDaoRepository implements DatabaseRepository {
 
     private final DbUserDao userDao;
     private final DbPhotoDao photoDao;
+    private final DbLastPhotoDao lastPhotoDao;
 
     public GreenDaoRepository(final Context globalContext) {
         Log.d(LOG_TAG, "Creating database...");
@@ -42,6 +45,88 @@ public class GreenDaoRepository implements DatabaseRepository {
 
         userDao = daoSession.getDbUserDao();
         photoDao = daoSession.getDbPhotoDao();
+        lastPhotoDao = daoSession.getDbLastPhotoDao();
+    }
+
+    @Override
+    public void saveLastPhoto(final User user, final Photo photo) {
+        Log.d(LOG_TAG, "Adding last photo to database...");
+
+        try {
+            database.beginTransaction();
+
+            DbUser dbUser = toDbUser(user);
+            userDao.insertOrReplace(dbUser);
+
+            DbPhoto dbPhoto = toDbPhoto(photo);
+            dbPhoto.setDbUser(dbUser);
+            photoDao.insertOrReplace(dbPhoto);
+
+            DbLastPhoto dbLastPhoto = new DbLastPhoto();
+            dbLastPhoto.setDbPhoto(dbPhoto);
+            dbLastPhoto.setDbUser(dbUser);
+            lastPhotoDao.insertOrReplace(dbLastPhoto);
+
+            database.setTransactionSuccessful();
+        }
+        finally {
+            database.endTransaction();
+        }
+    }
+
+    @Override
+    public Photo getLastPhoto(final User user) {
+        Log.d(LOG_TAG, "Looking for last photo in database...");
+
+        Photo photo = null;
+
+        final DbUser dbUser = findDbUser(user);
+
+        if (dbUser != null) {
+            final DbPhoto dbPhoto = findLastPhoto(dbUser);
+
+            if (dbPhoto != null) {
+                try {
+                    photo = new Photo(dbPhoto.getTitle(), dbPhoto.getDescription(), new URL(dbPhoto.getUrl()));
+                } catch (MalformedURLException e) {
+                    Log.e(LOG_TAG, "Found photo with broken url: " + dbPhoto.getUrl());
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return photo;
+    }
+
+    private DbUser findDbUser(final User user) {
+        DbUser dbUser = null;
+
+        final List<DbUser> dbUsers = userDao.queryBuilder().where(DbUserDao.Properties.GoogleId.eq(user.getGoogleUserId())).list();
+        if (dbUsers.isEmpty()) {
+            Log.e(LOG_TAG, "User with GoogleId '" + user.getGoogleUserId() + "' not found.");
+        }
+        else {
+            dbUser = dbUsers.get(0);
+        }
+
+        return dbUser;
+    }
+
+    private DbPhoto findLastPhoto(final DbUser dbUser) {
+        DbPhoto dbPhoto = null;
+
+        final List<DbLastPhoto> lastPhotos = lastPhotoDao.queryBuilder().where(DbLastPhotoDao.Properties.DbUserId.eq(dbUser.getId())).list();
+
+        if (lastPhotos.isEmpty()) {
+            Log.i(LOG_TAG, "Last photo not found.");
+        } else {
+            final DbLastPhoto lastDbPhoto = lastPhotos.get(0);
+            dbPhoto = lastDbPhoto.getDbPhoto();
+
+            Log.d(LOG_TAG, "Found last photo with title: " + dbPhoto.getTitle());
+        }
+
+        return dbPhoto;
     }
 
     @Override

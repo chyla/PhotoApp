@@ -236,6 +236,7 @@ public class MainActivity extends AppCompatActivity
         fragment.setCallback(new GalleryCallback() {
             @Override
             public void onGalleryPhotoClicked(final Photo photo) {
+                presenter.showPhoto(photo);
             }
         });
         fragment.addPhotos(photos);

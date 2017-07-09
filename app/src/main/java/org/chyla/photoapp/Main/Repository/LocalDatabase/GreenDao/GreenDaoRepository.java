@@ -55,17 +55,9 @@ public class GreenDaoRepository implements DatabaseRepository {
         try {
             database.beginTransaction();
 
-            DbUser dbUser = toDbUser(user);
-            userDao.insertOrReplace(dbUser);
-
-            DbPhoto dbPhoto = toDbPhoto(photo);
-            dbPhoto.setDbUser(dbUser);
-            photoDao.insertOrReplace(dbPhoto);
-
-            DbLastPhoto dbLastPhoto = new DbLastPhoto();
-            dbLastPhoto.setDbPhoto(dbPhoto);
-            dbLastPhoto.setDbUser(dbUser);
-            lastPhotoDao.insertOrReplace(dbLastPhoto);
+            DbUser dbUser = insertUserWhenNotExist(user);
+            DbPhoto dbPhoto = insertPhotoWhenNotExist(dbUser, photo);
+            insertOrReplaceLastPhoto(dbUser, dbPhoto);
 
             database.setTransactionSuccessful();
         }
@@ -136,12 +128,8 @@ public class GreenDaoRepository implements DatabaseRepository {
         try {
             database.beginTransaction();
 
-            DbUser dbUser = toDbUser(user);
-            userDao.insertOrReplace(dbUser);
-
-            DbPhoto dbPhoto = toDbPhoto(photo);
-            dbPhoto.setDbUser(dbUser);
-            photoDao.insertOrReplace(dbPhoto);
+            DbUser dbUser = insertUserWhenNotExist(user);
+            insertPhotoWhenNotExist(dbUser, photo);
 
             database.setTransactionSuccessful();
         }
@@ -157,8 +145,10 @@ public class GreenDaoRepository implements DatabaseRepository {
         DbUser dbUser = getUserFromDb(user);
         if (dbUser != null) {
             final List<DbPhoto> dbPhotos = photoDao.queryBuilder()
-                    .where(DbPhotoDao.Properties.DbUserId.eq(dbUser))
+                    .where(DbPhotoDao.Properties.DbUserId.eq(dbUser.getId()))
                     .list();
+
+            Log.d(LOG_TAG, "Found " + dbPhotos.size() + " photos in gallery.");
 
             for (final DbPhoto dbPhoto : dbPhotos) {
                 try {
@@ -171,6 +161,55 @@ public class GreenDaoRepository implements DatabaseRepository {
         }
 
         return photos;
+    }
+
+    private DbUser insertUserWhenNotExist(final User user) {
+        DbUser dbUser;
+
+        try {
+            dbUser = userDao.queryBuilder().where(DbUserDao.Properties.GoogleId.eq(user.getGoogleUserId())).unique();
+        } catch (Exception ex) {
+            dbUser = null;
+        }
+
+        if (dbUser == null) {
+            dbUser = toDbUser(user);
+            userDao.insert(dbUser);
+        }
+
+        return dbUser;
+    }
+
+    private DbPhoto insertPhotoWhenNotExist(final DbUser dbUser, final Photo photo) {
+        DbPhoto dbPhoto;
+
+        try {
+            dbPhoto = photoDao.queryBuilder().where(
+                    DbPhotoDao.Properties.DbUserId.eq(dbUser.getId()),
+                    DbPhotoDao.Properties.Title.eq(photo.getTitle()),
+                    DbPhotoDao.Properties.Description.eq(photo.getDescription()),
+                    DbPhotoDao.Properties.Url.eq(photo.getUrl().toString())
+                    ).unique();
+        } catch (Exception ex) {
+            dbPhoto = null;
+        }
+
+        if (dbPhoto == null) {
+            dbPhoto = toDbPhoto(photo);
+            dbPhoto.setDbUser(dbUser);
+            photoDao.insert(dbPhoto);
+        }
+
+        return dbPhoto;
+    }
+
+    private DbLastPhoto insertOrReplaceLastPhoto(final DbUser dbUser, final DbPhoto dbPhoto) {
+        DbLastPhoto dbLastPhoto = new DbLastPhoto();
+        dbLastPhoto.setDbPhoto(dbPhoto);
+        dbLastPhoto.setDbUser(dbUser);
+        lastPhotoDao.insertOrReplace(dbLastPhoto);
+
+        return dbLastPhoto;
     }
 
     private DbUser toDbUser(final User user) {

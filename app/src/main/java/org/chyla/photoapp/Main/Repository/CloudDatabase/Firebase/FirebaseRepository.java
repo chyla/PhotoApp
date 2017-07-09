@@ -13,6 +13,7 @@ import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.Model.objects.User;
 import org.chyla.photoapp.Main.Repository.CloudDatabase.CloudDatabaseRepository;
 import org.chyla.photoapp.Main.Repository.CloudDatabase.Firebase.detail.DbPhoto;
+import org.chyla.photoapp.Main.Repository.CloudDatabase.LastPhotoCallback;
 import org.chyla.photoapp.Main.Repository.CloudDatabase.PhotoGalleryCallback;
 
 import java.net.MalformedURLException;
@@ -28,6 +29,52 @@ public class FirebaseRepository implements CloudDatabaseRepository {
 
     public FirebaseRepository() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
+    }
+
+    @Override
+    public void saveLastPhoto(final User user, final Photo photo) {
+        Log.i(LOG_TAG, "Saving last photo in cloud database...");
+
+        DbPhoto dbPhoto = new DbPhoto(photo.getTitle(), photo.getDescription(), photo.getUrl().toString());
+        new AsyncSaveLastPhoto().execute(new SavePhotoHelper(user.getGoogleUserId(), dbPhoto));
+    }
+
+    @Override
+    public void getLastPhoto(final User user, final LastPhotoCallback callback) {
+        Log.i(LOG_TAG, "Looking for last photo in cloud database...");
+
+        final ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                final DataSnapshot photoSnapshot = dataSnapshot.child(user.getGoogleUserId()).child("lastPhoto");
+
+                Photo photo = null;
+
+                if (photoSnapshot != null) {
+                    try {
+                        Log.i(LOG_TAG, "Found last photo in cloud database.");
+
+                        photo = toPhoto(photoSnapshot);
+                    } catch (MalformedURLException e) {
+                        Log.e(LOG_TAG, "Found photo with broken url, ignoring...");
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    Log.i(LOG_TAG, "Last photo not found in cloud database.");
+                }
+
+                callback.onSuccess(photo);
+            }
+
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
+                Log.e(LOG_TAG, "Failed to get gallery from Firebase. Cause: " + databaseError.getMessage());
+                callback.onFailure();
+            }
+        };
+
+        databaseReference.addListenerForSingleValueEvent(listener);
     }
 
     @Override
@@ -74,6 +121,18 @@ public class FirebaseRepository implements CloudDatabaseRepository {
             final SavePhotoHelper helper = params[0];
 
             final DatabaseReference element = databaseReference.child(helper.userId).child("gallery").push();
+            element.setValue(helper.photo);
+
+            return null;
+        }
+    }
+
+    private class AsyncSaveLastPhoto extends AsyncTask<SavePhotoHelper, Void, Void> {
+        @Override
+        protected Void doInBackground(SavePhotoHelper... params) {
+            final SavePhotoHelper helper = params[0];
+
+            final DatabaseReference element = databaseReference.child(helper.userId).child("lastPhoto");
             element.setValue(helper.photo);
 
             return null;

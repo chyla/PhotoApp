@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface UserGalleryInteractor {
 
+    void addPhotoToGallery(final Photo photo);
+
     List<Photo> getUserPhotos();
 
 }

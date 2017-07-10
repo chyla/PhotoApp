@@ -19,6 +19,7 @@ public interface MainPresenter {
     void inspectPhotos(final String tags);
     void showInspectedPhoto(final Photo photo);
     void onShowInspectedPhotosEvent(final ShowInspectedPhotosEvent event);
+    void addPhotoToGallery(final Photo photo);
 
     void showUserGallery();
 }

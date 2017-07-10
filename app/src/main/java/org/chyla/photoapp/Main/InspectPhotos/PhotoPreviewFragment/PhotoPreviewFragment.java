@@ -91,25 +91,25 @@ public class PhotoPreviewFragment extends Fragment implements SwipeActionListene
     @Override
     public void onSwipeUp() {
         Log.d(LOG_TAG, "onSwipeUp call");
-        mPhotoActionListener.onPhotoSave(photo);
+        mPhotoActionListener.onPhotoDismiss();
     }
 
     @Override
     public void onSwipeDown() {
         Log.d(LOG_TAG, "onSwipeDown call");
-        mPhotoActionListener.onPhotoSave(photo);
+        mPhotoActionListener.onPhotoDismiss();
     }
 
     @Override
     public void onSwipeLeft() {
         Log.d(LOG_TAG, "onSwipeLeft call");
-        mPhotoActionListener.onPhotoDismiss();
+        mPhotoActionListener.onPhotoSave(photo);
     }
 
     @Override
     public void onSwipeRight() {
         Log.d(LOG_TAG, "onSwipeRight call");
-        mPhotoActionListener.onPhotoDismiss();
+        mPhotoActionListener.onPhotoSave(photo);
     }
 
 }

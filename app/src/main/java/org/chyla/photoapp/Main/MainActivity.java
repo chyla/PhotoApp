@@ -74,7 +74,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,MainView,
-        PhotoPreviewActionListener, ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback {
 
     private final static String LOG_TAG = "MainActivity";
     private final static int REQUEST_IMAGE_CAPTURE = 10;
@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity
 
     private final FragmentManager fragmentManager = getFragmentManager();
     private Fragment currentFragment;
+    private GalleryFragment inspectedPhotosGallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity
 
             NewPhotoInteractor newPhotoInteractor = new NewPhotoInteractorImpl(cloudStorageRepository, cloudDatabaseRepository, databaseRepository, authenticator);
 
-            UserGalleryInteractor userGalleryInteractor = new UserGalleryInteractorImpl(databaseRepository, authenticator);
+            UserGalleryInteractor userGalleryInteractor = new UserGalleryInteractorImpl(authenticator, cloudDatabaseRepository, databaseRepository);
             InspectPhotosInteractor inspectPhotosInteractor = new InspectPhotosInteractorImpl(cloudPhotosExplorerRepository);
 
             presenter = new MainPresenterImpl(this, authenticator, lastPhotoInteractor, newPhotoInteractor, inspectPhotosInteractor, userGalleryInteractor);
@@ -249,16 +250,16 @@ public class MainActivity extends AppCompatActivity
     public void showInspectedPhotosGallery(final List<Photo> photos) {
         Log.d(LOG_TAG, "Received " + photos.size() + " photos to show.");
 
-        GalleryFragment fragment = new GalleryFragment();
-        fragment.setCallback(new GalleryCallback() {
+        inspectedPhotosGallery = new GalleryFragment();
+        inspectedPhotosGallery.setCallback(new GalleryCallback() {
             @Override
             public void onGalleryPhotoClicked(final Photo photo) {
                 presenter.showInspectedPhoto(photo);
             }
         });
-        fragment.addPhotos(photos);
+        inspectedPhotosGallery.addPhotos(photos);
 
-        showFragment(fragment);
+        showFragment(inspectedPhotosGallery);
     }
 
     @Override
@@ -267,7 +268,21 @@ public class MainActivity extends AppCompatActivity
 
         PhotoPreviewFragment fragment = new PhotoPreviewFragment();
         fragment.setPhoto(photo);
-        fragment.setPhotoActionListener(this);
+        fragment.setPhotoActionListener(new PhotoPreviewActionListener() {
+
+            @Override
+            public void onPhotoSave(final Photo photo) {
+                Log.d(LOG_TAG, "onPhotoSave call with: " + photo.getUrl());
+                presenter.addPhotoToGallery(photo);
+            }
+
+            @Override
+            public void onPhotoDismiss() {
+                Log.d(LOG_TAG, "onPhotoDismiss call");
+                showFragment(inspectedPhotosGallery);
+            }
+
+        });
         showFragment(fragment);
     }
 
@@ -385,16 +400,6 @@ public class MainActivity extends AppCompatActivity
     protected void onStop() {
         presenter.onStop();
         super.onStop();
-    }
-
-    @Override
-    public void onPhotoSave(final Photo photo) {
-        Log.d(LOG_TAG, "onPhotoSave call with: " + photo.getUrl());
-    }
-
-    @Override
-    public void onPhotoDismiss() {
-        Log.d(LOG_TAG, "onPhotoDismiss call");
     }
 
 }

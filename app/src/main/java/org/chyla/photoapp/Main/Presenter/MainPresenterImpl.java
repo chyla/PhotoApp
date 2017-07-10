@@ -10,7 +10,6 @@ import org.chyla.photoapp.Main.Model.UserGalleryInteractor;
 import org.chyla.photoapp.Main.Model.detail.Event.ShowInspectedPhotosEvent;
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Model.Authenticator.Authenticator;
-import org.chyla.photoapp.Model.Authenticator.AuthenticatorImpl;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -93,6 +92,12 @@ public class MainPresenterImpl implements MainPresenter {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onShowInspectedPhotosEvent(final ShowInspectedPhotosEvent event) {
         view.showInspectedPhotosGallery(event.getPhotos());
+    }
+
+    @Override
+    public void addPhotoToGallery(Photo photo) {
+        userGalleryInteractor.addPhotoToGallery(photo);
+        showUserGallery();
     }
 
     @Override

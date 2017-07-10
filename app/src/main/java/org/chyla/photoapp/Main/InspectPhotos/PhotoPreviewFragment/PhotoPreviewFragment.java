@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -25,6 +26,8 @@ public class PhotoPreviewFragment extends Fragment implements SwipeActionListene
     private Context mContext;
     private GestureDetectorCompat mDetector;
     private PhotoPreviewActionListener mPhotoActionListener;
+    private TextView titleView;
+    private TextView descriptionView;
     private ImageView imageView;
     private Photo photo;
 
@@ -56,6 +59,8 @@ public class PhotoPreviewFragment extends Fragment implements SwipeActionListene
             }
         });
 
+        titleView = (TextView) v.findViewById(R.id.text_title);
+        descriptionView = (TextView) v.findViewById(R.id.text_description);
         imageView = (ImageView) v.findViewById(R.id.imageView);
         updatePhotoView();
 
@@ -84,6 +89,8 @@ public class PhotoPreviewFragment extends Fragment implements SwipeActionListene
     private void updatePhotoView() {
         if (imageView != null && photo != null) {
             Log.d(LOG_TAG, "Updating photo view...");
+            titleView.setText(photo.getTitle());
+            descriptionView.setText(photo.getDescription());
             Picasso.with(imageView.getContext()).load(photo.getUrl().toString()).into(imageView);
         }
     }

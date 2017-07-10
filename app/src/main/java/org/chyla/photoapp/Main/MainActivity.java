@@ -207,6 +207,10 @@ public class MainActivity extends AppCompatActivity
                 showSearchPhotosFragment();
                 break;
 
+            case R.id.nav_share:
+                shareApp();
+                break;
+
             case R.id.nav_logout:
                 presenter.logoutUser();
                 break;
@@ -350,6 +354,17 @@ public class MainActivity extends AppCompatActivity
         Log.d(LOG_TAG, "Temporary photo file: " + photoFile.toString());
 
         return photoFile;
+    }
+
+    private void shareApp() {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_SUBJECT, "PhotoApp");
+
+        String sAux = "\nLet me recommend you this application\n\nmarket://details?id=org.chyla.photoapp\n\n";
+        i.putExtra(Intent.EXTRA_TEXT, sAux);
+
+        startActivity(Intent.createChooser(i, "choose one"));
     }
 
     @Override

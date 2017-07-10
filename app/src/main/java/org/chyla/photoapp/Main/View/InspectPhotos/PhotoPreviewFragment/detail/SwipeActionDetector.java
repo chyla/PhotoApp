@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.detail;
+package org.chyla.photoapp.Main.View.InspectPhotos.PhotoPreviewFragment.detail;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;

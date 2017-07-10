@@ -1,34 +1,40 @@
-package org.chyla.photoapp.Main.NewPhoto;
+package org.chyla.photoapp.Main.View.InspectPhotos;
 
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
+import org.chyla.photoapp.Main.Presenter.MainPresenter;
 import org.chyla.photoapp.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NewPhotoDetailsFragment extends Fragment {
 
-    private NewPhotoCallback newPhotoCallback;
+public class SearchPhotosFragment extends Fragment {
 
-    @BindView(R.id.edittext_title)
-    EditText titleEditText;
+    private final static String LOG_TAG = "SearchPhotosFragment";
 
-    @BindView(R.id.edittext_description)
-    EditText descriptionEditText;
+    private MainPresenter presenter;
 
-    public NewPhotoDetailsFragment() {
+    @BindView(R.id.button_search)
+    Button searchButton;
+
+    @BindView(R.id.edittext_tags)
+    EditText tagsEditText;
+
+    public SearchPhotosFragment() {
     }
 
-    public void setNewPhotoCallback(NewPhotoCallback callback) {
-        newPhotoCallback = callback;
+    public void setPresenter(final MainPresenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
@@ -39,7 +45,7 @@ public class NewPhotoDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_new_photo_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_inspect_photos, container, false);
 
         ButterKnife.bind(this, view);
 
@@ -56,14 +62,10 @@ public class NewPhotoDetailsFragment extends Fragment {
         super.onDetach();
     }
 
-    @OnClick(R.id.button_save)
-    void onSaveButton() {
-        if (titleEditText.getText().toString().length() > 0) {
-            newPhotoCallback.onCreateNewPhotoCallback(titleEditText.getText().toString(), descriptionEditText.getText().toString());
-        }
-        else {
-            titleEditText.setError("Can't be empty.");
-        }
+    @OnClick(R.id.button_search)
+    void searchPhotos() {
+        Log.d(LOG_TAG, "Search button clicked.");
+        presenter.inspectPhotos(tagsEditText.getText().toString());
     }
 
 }

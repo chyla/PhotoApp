@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.detail;
+package org.chyla.photoapp.Main.View.InspectPhotos.PhotoPreviewFragment.detail;
 
 public interface SwipeActionListener {
     void onSwipeUp();

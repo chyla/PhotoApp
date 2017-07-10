@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.NewPhoto;
+package org.chyla.photoapp.Main.View.NewPhoto;
 
 public interface NewPhotoCallback {
 

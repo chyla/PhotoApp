@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_margin="10dp"
     android:orientation="vertical"
-    tools:context=".Main.InspectPhotos.PhotoPreviewFragment.PhotoPreviewFragment">
+    tools:context=".Main.View.InspectPhotos.PhotoPreviewFragment.PhotoPreviewFragment">
 
     <TextView
         android:layout_width="match_parent"

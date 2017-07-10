@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment;
+package org.chyla.photoapp.Main.View.InspectPhotos.PhotoPreviewFragment;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.detail.SwipeActionDetector;
-import org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment.detail.SwipeActionListener;
+import org.chyla.photoapp.Main.View.InspectPhotos.PhotoPreviewFragment.detail.SwipeActionDetector;
+import org.chyla.photoapp.Main.View.InspectPhotos.PhotoPreviewFragment.detail.SwipeActionListener;
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.R;
 

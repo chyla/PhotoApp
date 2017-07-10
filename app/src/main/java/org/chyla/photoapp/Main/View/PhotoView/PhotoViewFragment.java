@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.PhotoView;
+package org.chyla.photoapp.Main.View.PhotoView;
 
 import android.app.Fragment;
 import android.content.Context;

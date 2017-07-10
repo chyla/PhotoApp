@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.GalleryFragment.detail;
+package org.chyla.photoapp.Main.View.Gallery.detail;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 
 import com.squareup.picasso.Picasso;
 
-import org.chyla.photoapp.Main.GalleryFragment.GalleryCallback;
+import org.chyla.photoapp.Main.View.Gallery.GalleryCallback;
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.R;
 

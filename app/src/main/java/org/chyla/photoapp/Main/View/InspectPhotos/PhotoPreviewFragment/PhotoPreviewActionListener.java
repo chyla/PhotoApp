@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.InspectPhotos.PhotoPreviewFragment;
+package org.chyla.photoapp.Main.View.InspectPhotos.PhotoPreviewFragment;
 
 import org.chyla.photoapp.Main.Model.objects.Photo;
 

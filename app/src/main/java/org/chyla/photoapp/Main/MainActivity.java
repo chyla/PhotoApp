@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
 
     private final FragmentManager fragmentManager = getFragmentManager();
     private Fragment currentFragment;
-    private GalleryFragment inspectedPhotosGallery;
+    private List<Photo> inspectedPhotos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,7 +250,9 @@ public class MainActivity extends AppCompatActivity
     public void showInspectedPhotosGallery(final List<Photo> photos) {
         Log.d(LOG_TAG, "Received " + photos.size() + " photos to show.");
 
-        inspectedPhotosGallery = new GalleryFragment();
+        inspectedPhotos = photos;
+
+        GalleryFragment inspectedPhotosGallery = new GalleryFragment();
         inspectedPhotosGallery.setCallback(new GalleryCallback() {
             @Override
             public void onGalleryPhotoClicked(final Photo photo) {
@@ -263,7 +265,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void showInspectedPhoto(Photo photo) {
+    public void showInspectedPhoto(final Photo photo) {
         Log.d(LOG_TAG, "Inspecting photo: " + photo.getUrl().toString());
 
         PhotoPreviewFragment fragment = new PhotoPreviewFragment();
@@ -279,7 +281,13 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onPhotoDismiss() {
                 Log.d(LOG_TAG, "onPhotoDismiss call");
-                showFragment(inspectedPhotosGallery);
+                int index = inspectedPhotos.indexOf(photo);
+                if (index == -1 || index + 1 >= inspectedPhotos.size()) {
+                    Snackbar.make(drawer, "No more photos to view.", Snackbar.LENGTH_LONG).show();
+                }
+                else {
+                    showInspectedPhoto(inspectedPhotos.get(index + 1));
+                }
             }
 
         });

@@ -50,7 +50,7 @@ public class LoginPresenterImpl implements LoginPresenter {
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSuccessEvent(SuccessEvent event) {
-        view.startMainActivity();
+        view.startSynchronizeActivity();
     }
 
     @Override

@@ -2,7 +2,7 @@ package org.chyla.photoapp.Main.Model;
 
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.Model.objects.User;
-import org.chyla.photoapp.Main.Repository.LocalDatabase.DatabaseRepository;
+import org.chyla.photoapp.Repository.LocalDatabase.DatabaseRepository;
 import org.chyla.photoapp.Model.Authenticator.Authenticator;
 
 public class LastPhotoInteractorImpl implements LastPhotoInteractor {

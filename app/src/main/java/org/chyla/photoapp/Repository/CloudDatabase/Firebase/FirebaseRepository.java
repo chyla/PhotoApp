@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.Repository.CloudDatabase.Firebase;
+package org.chyla.photoapp.Repository.CloudDatabase.Firebase;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -11,10 +11,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.Model.objects.User;
-import org.chyla.photoapp.Main.Repository.CloudDatabase.CloudDatabaseRepository;
-import org.chyla.photoapp.Main.Repository.CloudDatabase.Firebase.detail.DbPhoto;
-import org.chyla.photoapp.Main.Repository.CloudDatabase.LastPhotoCallback;
-import org.chyla.photoapp.Main.Repository.CloudDatabase.PhotoGalleryCallback;
+import org.chyla.photoapp.Repository.CloudDatabase.CloudDatabaseRepository;
+import org.chyla.photoapp.Repository.CloudDatabase.Firebase.detail.DbPhoto;
+import org.chyla.photoapp.Repository.CloudDatabase.LastPhotoCallback;
+import org.chyla.photoapp.Repository.CloudDatabase.PhotoGalleryCallback;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -158,11 +158,17 @@ public class FirebaseRepository implements CloudDatabaseRepository {
     private Photo toPhoto(final DataSnapshot photoSnapshot) throws MalformedURLException {
         HashMap dbPhoto = (HashMap) photoSnapshot.getValue();
 
-        return new Photo(
-                dbPhoto.get("title").toString(),
-                dbPhoto.get("description").toString(),
-                new URL(dbPhoto.get("url").toString())
-                );
+        Photo photo = null;
+
+        if (photo != null) {
+            photo = new Photo(
+                    dbPhoto.get("title").toString(),
+                    dbPhoto.get("description").toString(),
+                    new URL(dbPhoto.get("url").toString())
+            );
+        }
+
+        return photo;
     }
 
 }

@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.Repository.CloudDatabase.Firebase.detail;
+package org.chyla.photoapp.Repository.CloudDatabase.Firebase.detail;
 
 public class DbPhoto {
 

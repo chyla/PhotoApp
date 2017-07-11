@@ -4,6 +4,7 @@ import org.chyla.photoapp.Login.Presenter.LoginPresenter;
 import org.chyla.photoapp.Login.Presenter.LoginPresenterImpl;
 import org.chyla.photoapp.Main.MainActivity;
 import org.chyla.photoapp.R;
+import org.chyla.photoapp.Synchronization.SynchronizationActivity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -114,8 +115,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     @Override
-    public void startMainActivity() {
-        startActivity(new Intent(this, MainActivity.class));
+    public void startSynchronizeActivity() {
+        startActivity(new Intent(this, SynchronizationActivity.class));
         finish();
     }
 

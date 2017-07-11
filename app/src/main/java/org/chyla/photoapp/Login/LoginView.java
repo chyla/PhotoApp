@@ -12,5 +12,5 @@ public interface LoginView {
     void handleMailError();
     void handlePasswordError();
 
-    void startMainActivity();
+    void startSynchronizeActivity();
 }

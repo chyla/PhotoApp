@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.Repository.LocalDatabase;
+package org.chyla.photoapp.Repository.LocalDatabase;
 
 import org.chyla.photoapp.Main.Model.objects.Photo;
 import org.chyla.photoapp.Main.Model.objects.User;

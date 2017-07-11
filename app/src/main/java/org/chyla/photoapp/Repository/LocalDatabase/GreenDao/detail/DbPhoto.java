@@ -1,4 +1,4 @@
-package org.chyla.photoapp.Main.Repository.LocalDatabase.GreenDao.detail;
+package org.chyla.photoapp.Repository.LocalDatabase.GreenDao.detail;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;

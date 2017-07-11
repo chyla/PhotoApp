@@ -9,6 +9,7 @@ import org.chyla.photoapp.Main.Model.NewPhotoInteractor;
 import org.chyla.photoapp.Main.Model.UserGalleryInteractor;
 import org.chyla.photoapp.Main.Model.detail.Event.ShowInspectedPhotosEvent;
 import org.chyla.photoapp.Main.Model.objects.Photo;
+import org.chyla.photoapp.Main.Model.objects.User;
 import org.chyla.photoapp.Model.Authenticator.Authenticator;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -81,6 +82,9 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onStart() {
         EventBus.getDefault().register(this);
+
+        User user = authenticator.getLoggedUser();
+        view.setUserMail(user.getEmail());
     }
 
     @Override

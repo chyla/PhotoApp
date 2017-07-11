@@ -27,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import org.chyla.photoapp.Login.LoginActivity;
 import org.chyla.photoapp.Main.Configuration.CloudinaryPropertyReader;
@@ -297,6 +298,14 @@ public class MainActivity extends AppCompatActivity
 
         });
         showFragment(fragment);
+    }
+
+    @Override
+    public void setUserMail(final String mail) {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        TextView mailView = (TextView) header.findViewById(R.id.text_nav_mail);
+        mailView.setText(mail);
     }
 
     private void takePhoto() {

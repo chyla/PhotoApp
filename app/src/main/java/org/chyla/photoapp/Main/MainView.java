@@ -13,4 +13,6 @@ public interface MainView {
     void showInspectedPhotosGallery(final List<Photo> photos);
     void showInspectedPhoto(final Photo photo);
 
+    void setUserMail(final String mail);
+
 }

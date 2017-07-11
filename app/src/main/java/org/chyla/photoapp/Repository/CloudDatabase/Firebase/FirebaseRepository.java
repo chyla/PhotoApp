@@ -160,7 +160,7 @@ public class FirebaseRepository implements CloudDatabaseRepository {
 
         Photo photo = null;
 
-        if (photo != null) {
+        if (dbPhoto != null) {
             photo = new Photo(
                     dbPhoto.get("title").toString(),
                     dbPhoto.get("description").toString(),

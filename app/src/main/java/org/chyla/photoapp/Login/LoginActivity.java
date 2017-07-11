@@ -3,8 +3,11 @@ package org.chyla.photoapp.Login;
 import org.chyla.photoapp.Login.Presenter.LoginPresenter;
 import org.chyla.photoapp.Login.Presenter.LoginPresenterImpl;
 import org.chyla.photoapp.Main.MainActivity;
+import org.chyla.photoapp.Model.Authenticator.Authenticator;
+import org.chyla.photoapp.Model.Authenticator.AuthenticatorImpl;
 import org.chyla.photoapp.R;
 import org.chyla.photoapp.Synchronization.SynchronizationActivity;
+import org.greenrobot.eventbus.EventBus;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -37,18 +40,28 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        presenter = new LoginPresenterImpl(this);
+        setupInjection();
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                if (id == EditorInfo.IME_NULL) {
                     attemptLogin();
                     return true;
                 }
                 return false;
             }
         });
+    }
+
+    private void setupInjection() {
+        presenter = getPresenter();
+    }
+
+    public LoginPresenter getPresenter() {
+        Authenticator authenticator = new AuthenticatorImpl();
+
+        return new LoginPresenterImpl(EventBus.getDefault(), this, authenticator);
     }
 
     @OnClick(R.id.email_sign_in_button)

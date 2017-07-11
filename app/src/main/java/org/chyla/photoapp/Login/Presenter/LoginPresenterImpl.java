@@ -14,12 +14,15 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class LoginPresenterImpl implements LoginPresenter {
 
+    private EventBus eventBus;
     private Authenticator authenticator;
     private LoginView view;
 
-    public LoginPresenterImpl(LoginView view) {
+
+    public LoginPresenterImpl(EventBus eventBus, LoginView view, Authenticator authenticator) {
         this.view = view;
-        authenticator = new AuthenticatorImpl();
+        this.authenticator = authenticator;
+        this.eventBus = eventBus;
     }
 
     @Override
@@ -38,13 +41,13 @@ public class LoginPresenterImpl implements LoginPresenter {
 
     @Override
     public void onStart() {
-        EventBus.getDefault().register(this);
+        eventBus.register(this);
         authenticator.checkUserLoggedIn();
     }
 
     @Override
     public void onStop() {
-        EventBus.getDefault().unregister(this);
+        eventBus.unregister(this);
     }
 
     @Override

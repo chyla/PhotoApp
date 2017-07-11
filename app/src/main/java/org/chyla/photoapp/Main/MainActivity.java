@@ -224,6 +224,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void startLoginActivity() {
         startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override

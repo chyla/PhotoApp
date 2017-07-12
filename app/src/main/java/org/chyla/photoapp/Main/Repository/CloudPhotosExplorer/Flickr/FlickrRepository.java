@@ -19,12 +19,17 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 public class FlickrRepository implements CloudPhotosExplorerRepository {
 
     private static final String LOG_TAG = "FlickrRepository";
-    private static final String BASE_API_URL = "https://api.flickr.com/services/rest/";
+    private static String BASE_API_URL;
     private final String API_KEY;
     private FlickrService service;
 
     public FlickrRepository(final String api_key) {
+        this(api_key, "https://api.flickr.com/services/rest/");
+    }
+
+    public FlickrRepository(final String api_key, final String base_api_url) {
         API_KEY = api_key;
+        BASE_API_URL = base_api_url;
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -54,6 +59,10 @@ public class FlickrRepository implements CloudPhotosExplorerRepository {
 
         for (final String tag : tags) {
             allTags = allTags + tag + ",";
+        }
+
+        if (allTags.length() > 0) {
+            allTags = allTags.substring(0, allTags.length() - 1);
         }
 
         return allTags;

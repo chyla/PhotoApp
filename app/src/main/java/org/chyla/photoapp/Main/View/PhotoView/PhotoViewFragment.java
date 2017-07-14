@@ -17,7 +17,7 @@ import org.chyla.photoapp.R;
 
 public class PhotoViewFragment extends Fragment {
 
-    private final static String LOG_TAG = "PhotoViewFragment";
+    public final static String TAG = "PhotoViewFragment";
 
     private Photo photo;
     private Context context;
@@ -71,7 +71,7 @@ public class PhotoViewFragment extends Fragment {
 
     private void updatePhotoView() {
         if (imageView != null && photo != null) {
-            Log.d(LOG_TAG, "Updating photo view...");
+            Log.d(TAG, "Updating photo view...");
 
             titleText.setText(photo.getTitle());
             descriptionText.setText(photo.getDescription());
@@ -80,7 +80,7 @@ public class PhotoViewFragment extends Fragment {
             showPhotoContent();
         }
         else {
-            Log.d(LOG_TAG, "No photo to view...");
+            Log.d(TAG, "No photo to view...");
 
             showNoPhotoInfo();
         }

@@ -20,7 +20,7 @@ import butterknife.OnClick;
 
 public class SearchPhotosFragment extends Fragment {
 
-    private final static String LOG_TAG = "SearchPhotosFragment";
+    public final static String TAG = "SearchPhotosFragment";
 
     private MainPresenter presenter;
 
@@ -64,7 +64,7 @@ public class SearchPhotosFragment extends Fragment {
 
     @OnClick(R.id.button_search)
     void searchPhotos() {
-        Log.d(LOG_TAG, "Search button clicked.");
+        Log.d(TAG, "Search button clicked.");
         presenter.inspectPhotos(tagsEditText.getText().toString());
     }
 

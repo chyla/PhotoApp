@@ -16,6 +16,8 @@ import butterknife.OnClick;
 
 public class NewPhotoDetailsFragment extends Fragment {
 
+    public final static String TAG = "NewPhotoDetailsFragment";
+
     private NewPhotoCallback newPhotoCallback;
 
     @BindView(R.id.edittext_title)

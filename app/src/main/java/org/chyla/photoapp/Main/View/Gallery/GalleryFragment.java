@@ -18,6 +18,8 @@ import java.util.List;
 
 public class GalleryFragment extends Fragment {
 
+    public final static String TAG = "GalleryFragment";
+
     private final List<Photo> photos;
     private RecyclerView.LayoutManager layoutManager;
     private GalleryPhotoAdapter adapter;

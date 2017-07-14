@@ -23,7 +23,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -187,7 +186,7 @@ public class MainActivity extends AppCompatActivity
     public void showPhoto(final Photo photo) {
         PhotoViewFragment fragment = new PhotoViewFragment();
         fragment.setPhoto(photo);
-        showFragment(fragment);
+        showFragment(fragment, PhotoViewFragment.TAG);
     }
 
     @Override
@@ -203,7 +202,7 @@ public class MainActivity extends AppCompatActivity
         });
         fragment.addPhotos(photos);
 
-        showFragment(fragment);
+        showFragment(fragment, GalleryFragment.TAG);
 
     }
 
@@ -222,7 +221,7 @@ public class MainActivity extends AppCompatActivity
         });
         inspectedPhotosGallery.addPhotos(photos);
 
-        showFragment(inspectedPhotosGallery);
+        showFragment(inspectedPhotosGallery, GalleryFragment.TAG);
     }
 
     @Override
@@ -252,7 +251,7 @@ public class MainActivity extends AppCompatActivity
             }
 
         });
-        showFragment(fragment);
+        showFragment(fragment, PhotoPreviewFragment.TAG);
     }
 
     @Override
@@ -346,7 +345,7 @@ public class MainActivity extends AppCompatActivity
                     presenter.addNewPhoto(title, description, newPhotoPath);
                 }
             });
-            showFragment(fragment);
+            showFragment(fragment,NewPhotoDetailsFragment.TAG);
         }
     }
 
@@ -367,14 +366,14 @@ public class MainActivity extends AppCompatActivity
     private void showSearchPhotosFragment() {
         SearchPhotosFragment fragment = new SearchPhotosFragment();
         fragment.setPresenter(presenter);
-        showFragment(fragment);
+        showFragment(fragment, SearchPhotosFragment.TAG);
     }
 
-    private void showFragment(Fragment fragment) {
+    private void showFragment(Fragment fragment, String tag) {
         currentFragment = fragment;
 
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.fragment_container, currentFragment);
+        ft.replace(R.id.fragment_container, currentFragment, tag);
         ft.commit();
     }
 

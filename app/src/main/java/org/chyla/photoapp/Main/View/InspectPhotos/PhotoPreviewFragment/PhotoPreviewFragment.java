@@ -21,7 +21,7 @@ import org.chyla.photoapp.R;
 
 public class PhotoPreviewFragment extends Fragment implements SwipeActionListener {
 
-    private final static String LOG_TAG = "PhotoPreviewFragment";
+    public final static String TAG = "PhotoPreviewFragment";
 
     private Context mContext;
     private GestureDetectorCompat mDetector;
@@ -88,7 +88,7 @@ public class PhotoPreviewFragment extends Fragment implements SwipeActionListene
 
     private void updatePhotoView() {
         if (imageView != null && photo != null) {
-            Log.d(LOG_TAG, "Updating photo view...");
+            Log.d(TAG, "Updating photo view...");
             titleView.setText(photo.getTitle());
             descriptionView.setText(photo.getDescription());
             Picasso.with(imageView.getContext()).load(photo.getUrl().toString()).into(imageView);
@@ -97,25 +97,25 @@ public class PhotoPreviewFragment extends Fragment implements SwipeActionListene
 
     @Override
     public void onSwipeUp() {
-        Log.d(LOG_TAG, "onSwipeUp call");
+        Log.d(TAG, "onSwipeUp call");
         mPhotoActionListener.onPhotoDismiss();
     }
 
     @Override
     public void onSwipeDown() {
-        Log.d(LOG_TAG, "onSwipeDown call");
+        Log.d(TAG, "onSwipeDown call");
         mPhotoActionListener.onPhotoDismiss();
     }
 
     @Override
     public void onSwipeLeft() {
-        Log.d(LOG_TAG, "onSwipeLeft call");
+        Log.d(TAG, "onSwipeLeft call");
         mPhotoActionListener.onPhotoSave(photo);
     }
 
     @Override
     public void onSwipeRight() {
-        Log.d(LOG_TAG, "onSwipeRight call");
+        Log.d(TAG, "onSwipeRight call");
         mPhotoActionListener.onPhotoSave(photo);
     }
 

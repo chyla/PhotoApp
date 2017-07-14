@@ -1,10 +1,9 @@
 package org.chyla.photoapp.Login;
 
+import org.chyla.photoapp.Login.DependencyInjection.DaggerLoginComponent;
+import org.chyla.photoapp.Login.DependencyInjection.LoginComponent;
+import org.chyla.photoapp.Login.DependencyInjection.LoginModule;
 import org.chyla.photoapp.Login.Presenter.LoginPresenter;
-import org.chyla.photoapp.Login.Presenter.LoginPresenterImpl;
-import org.chyla.photoapp.Main.MainActivity;
-import org.chyla.photoapp.Model.Authenticator.Authenticator;
-import org.chyla.photoapp.Model.Authenticator.AuthenticatorImpl;
 import org.chyla.photoapp.R;
 import org.chyla.photoapp.Synchronization.SynchronizationActivity;
 import org.greenrobot.eventbus.EventBus;
@@ -34,6 +33,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @BindView(R.id.login_progress) View mProgressView;
     @BindView(R.id.login_form) View mLoginFormView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,9 +59,12 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     public LoginPresenter getPresenter() {
-        Authenticator authenticator = new AuthenticatorImpl();
+        LoginComponent loginComponent = DaggerLoginComponent
+                .builder()
+                .loginModule(new LoginModule(this, EventBus.getDefault()))
+                .build();
 
-        return new LoginPresenterImpl(EventBus.getDefault(), this, authenticator);
+        return loginComponent.getPresenter();
     }
 
     @OnClick(R.id.email_sign_in_button)

@@ -62,6 +62,8 @@ import org.chyla.photoapp.Repository.LocalDatabase.GreenDao.GreenDaoRepository;
 import org.chyla.photoapp.Model.Authenticator.Authenticator;
 import org.chyla.photoapp.Model.Authenticator.AuthenticatorImpl;
 import org.chyla.photoapp.R;
+import org.chyla.photoapp.Repository.Login.LoginRepository;
+import org.chyla.photoapp.Repository.Login.LoginRepositoryImpl;
 
 import java.io.File;
 import java.io.IOException;
@@ -114,15 +116,15 @@ public class MainActivity extends AppCompatActivity
         try {
             CloudinaryPropertyReader cloudinaryPropertyReader = new CloudinaryPropertyReader(this);
 
-            Authenticator authenticator = new AuthenticatorImpl();
 
+            LoginRepository loginRepository = new LoginRepositoryImpl();
             CloudStorageRepository cloudStorageRepository = new CloudinaryRepository(cloudinaryPropertyReader.getConfig());
             CloudDatabaseRepository cloudDatabaseRepository = new FirebaseRepository();
             DatabaseRepository databaseRepository = new GreenDaoRepository(getApplicationContext());
             CloudPhotosExplorerRepository cloudPhotosExplorerRepository = new FlickrRepository(flickrApiKey);
 
+            Authenticator authenticator = new AuthenticatorImpl(loginRepository);
             LastPhotoInteractor lastPhotoInteractor = new LastPhotoInteractorImpl(authenticator, databaseRepository);
-
             NewPhotoInteractor newPhotoInteractor = new NewPhotoInteractorImpl(cloudStorageRepository, cloudDatabaseRepository, databaseRepository, authenticator);
 
             UserGalleryInteractor userGalleryInteractor = new UserGalleryInteractorImpl(authenticator, cloudDatabaseRepository, databaseRepository);

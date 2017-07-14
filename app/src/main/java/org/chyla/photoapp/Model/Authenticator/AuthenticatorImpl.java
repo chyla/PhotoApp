@@ -4,15 +4,17 @@ import org.chyla.photoapp.Main.Model.objects.User;
 import org.chyla.photoapp.Model.Authenticator.Event.ErrorEvent;
 import org.chyla.photoapp.Model.Authenticator.Event.SuccessEvent;
 import org.chyla.photoapp.Repository.Login.LoginRepository;
-import org.chyla.photoapp.Repository.Login.LoginRepositoryImpl;
 import org.greenrobot.eventbus.EventBus;
+
+import javax.inject.Inject;
 
 public class AuthenticatorImpl implements Authenticator {
 
     private LoginRepository repository;
 
-    public AuthenticatorImpl() {
-        repository = new LoginRepositoryImpl();
+    @Inject
+    public AuthenticatorImpl(LoginRepository repository) {
+        this.repository = repository;
     }
 
     @Override

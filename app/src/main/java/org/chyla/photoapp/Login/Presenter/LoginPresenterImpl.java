@@ -3,14 +3,14 @@ package org.chyla.photoapp.Login.Presenter;
 
 import org.chyla.photoapp.Login.LoginView;
 import org.chyla.photoapp.Model.Authenticator.Authenticator;
-import org.chyla.photoapp.Model.Authenticator.AuthenticatorImpl;
 import org.chyla.photoapp.Model.Authenticator.Event.CancelledEvent;
 import org.chyla.photoapp.Model.Authenticator.Event.ErrorEvent;
 import org.chyla.photoapp.Model.Authenticator.Event.SuccessEvent;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import javax.inject.Inject;
 
 public class LoginPresenterImpl implements LoginPresenter {
 
@@ -19,6 +19,7 @@ public class LoginPresenterImpl implements LoginPresenter {
     private LoginView view;
 
 
+    @Inject
     public LoginPresenterImpl(EventBus eventBus, LoginView view, Authenticator authenticator) {
         this.view = view;
         this.authenticator = authenticator;

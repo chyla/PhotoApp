@@ -1,8 +1,8 @@
 package org.chyla.photoapp.Synchronization;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import org.chyla.photoapp.Main.MainActivity;
 import org.chyla.photoapp.Model.Authenticator.Authenticator;
@@ -14,6 +14,9 @@ import org.chyla.photoapp.Repository.LocalDatabase.DatabaseRepository;
 import org.chyla.photoapp.Repository.LocalDatabase.GreenDao.GreenDaoRepository;
 import org.chyla.photoapp.Repository.Login.LoginRepository;
 import org.chyla.photoapp.Repository.Login.LoginRepositoryImpl;
+import org.chyla.photoapp.Synchronization.DependencyInjection.DaggerSynchronizationComponent;
+import org.chyla.photoapp.Synchronization.DependencyInjection.SynchronizationComponent;
+import org.chyla.photoapp.Synchronization.DependencyInjection.SynchronizationModule;
 import org.chyla.photoapp.Synchronization.Model.SynchronizeDataInteractor;
 import org.chyla.photoapp.Synchronization.Model.SynchronizeDataInteractorImpl;
 import org.chyla.photoapp.Synchronization.Presenter.SynchronizationPresenter;
@@ -28,16 +31,22 @@ public class SynchronizationActivity extends AppCompatActivity implements View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_synchronization);
 
-        LoginRepository loginRepository = new LoginRepositoryImpl();
-        CloudDatabaseRepository cloudDatabaseRepository = new FirebaseRepository();
-        DatabaseRepository localDatabaseRepository = new GreenDaoRepository(getApplicationContext());
-
-        Authenticator authenticator = new AuthenticatorImpl(loginRepository);
-        SynchronizeDataInteractor interactor = new SynchronizeDataInteractorImpl(cloudDatabaseRepository, localDatabaseRepository, authenticator);
-
-        presenter = new SynchronizationPresenterImpl(interactor, this);
+        setupInjection();
 
         presenter.synchronize();
+    }
+
+    private void setupInjection() {
+        presenter = getPresenter();
+    }
+
+    public SynchronizationPresenter getPresenter() {
+        SynchronizationComponent component = DaggerSynchronizationComponent
+                .builder()
+                .synchronizationModule(new SynchronizationModule(this, this))
+                .build();
+
+        return component.getPresenter();
     }
 
     @Override

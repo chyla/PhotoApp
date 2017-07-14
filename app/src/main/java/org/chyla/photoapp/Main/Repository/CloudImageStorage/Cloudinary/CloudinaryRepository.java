@@ -21,12 +21,16 @@ public class CloudinaryRepository implements CloudStorageRepository {
     private final Cloudinary cloudinary;
 
     public CloudinaryRepository(CloudinaryConfig config) {
+        cloudinary = getCloudinary(config);
+    }
+
+    protected Cloudinary getCloudinary(CloudinaryConfig config) {
         Map cfg = new HashMap();
         cfg.put("cloud_name", config.getCloudName());
         cfg.put("api_key", config.getApiKey());
         cfg.put("api_secret", config.getApiSecret());
 
-        cloudinary = new Cloudinary(cfg);
+        return new Cloudinary(cfg);
     }
 
     @Override

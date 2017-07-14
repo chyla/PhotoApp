@@ -32,6 +32,9 @@ import android.widget.TextView;
 import org.chyla.photoapp.Login.LoginActivity;
 import org.chyla.photoapp.Main.Configuration.CloudinaryPropertyReader;
 import org.chyla.photoapp.Main.Configuration.FlickrPropertyReader;
+import org.chyla.photoapp.Main.DependencyInjection.DaggerMainComponent;
+import org.chyla.photoapp.Main.DependencyInjection.MainComponent;
+import org.chyla.photoapp.Main.DependencyInjection.MainModule;
 import org.chyla.photoapp.Main.View.Gallery.GalleryCallback;
 import org.chyla.photoapp.Main.View.Gallery.GalleryFragment;
 import org.chyla.photoapp.Main.View.InspectPhotos.PhotoPreviewFragment.PhotoPreviewActionListener;
@@ -106,31 +109,7 @@ public class MainActivity extends AppCompatActivity
         String flickrApiKey = null;
 
         try {
-            FlickrPropertyReader flickrPropertyReader = new FlickrPropertyReader(this);
-            flickrApiKey = flickrPropertyReader.getApiKey();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Can't open flickr property file.");
-            e.printStackTrace();
-        }
-
-        try {
-            CloudinaryPropertyReader cloudinaryPropertyReader = new CloudinaryPropertyReader(this);
-
-
-            LoginRepository loginRepository = new LoginRepositoryImpl();
-            CloudStorageRepository cloudStorageRepository = new CloudinaryRepository(cloudinaryPropertyReader.getConfig());
-            CloudDatabaseRepository cloudDatabaseRepository = new FirebaseRepository();
-            DatabaseRepository databaseRepository = new GreenDaoRepository(getApplicationContext());
-            CloudPhotosExplorerRepository cloudPhotosExplorerRepository = new FlickrRepository(flickrApiKey);
-
-            Authenticator authenticator = new AuthenticatorImpl(loginRepository);
-            LastPhotoInteractor lastPhotoInteractor = new LastPhotoInteractorImpl(authenticator, databaseRepository);
-            NewPhotoInteractor newPhotoInteractor = new NewPhotoInteractorImpl(cloudStorageRepository, cloudDatabaseRepository, databaseRepository, authenticator);
-
-            UserGalleryInteractor userGalleryInteractor = new UserGalleryInteractorImpl(authenticator, cloudDatabaseRepository, databaseRepository);
-            InspectPhotosInteractor inspectPhotosInteractor = new InspectPhotosInteractorImpl(cloudPhotosExplorerRepository);
-
-            presenter = new MainPresenterImpl(this, authenticator, lastPhotoInteractor, newPhotoInteractor, inspectPhotosInteractor, userGalleryInteractor);
+            setupInjection();
 
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -156,6 +135,26 @@ public class MainActivity extends AppCompatActivity
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setupInjection() throws IOException {
+        presenter =  getPresenter();
+    }
+
+    public MainPresenter getPresenter() throws IOException {
+        CloudinaryPropertyReader cloudinaryPropertyReader = new CloudinaryPropertyReader(this);
+        FlickrPropertyReader flickrPropertyReader = new FlickrPropertyReader(this);
+
+        MainComponent component = DaggerMainComponent
+                .builder()
+                .mainModule(new MainModule(
+                        this,
+                        getApplicationContext(),
+                        cloudinaryPropertyReader.getConfig(),
+                        flickrPropertyReader.getApiKey()))
+                .build();
+
+        return component.getPresenter();
     }
 
     @Override

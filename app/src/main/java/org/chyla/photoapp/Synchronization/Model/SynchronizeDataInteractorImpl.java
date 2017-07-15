@@ -22,12 +22,19 @@ public class SynchronizeDataInteractorImpl implements SynchronizeDataInteractor 
     private final DatabaseRepository localDatabase;
 
     private final User currentUser;
+    private EventBus eventBus;
 
     public SynchronizeDataInteractorImpl(final CloudDatabaseRepository cloudDatabase, final DatabaseRepository localDatabase, final Authenticator authenticator) {
         this.cloudDatabase = cloudDatabase;
         this.localDatabase = localDatabase;
 
         currentUser = authenticator.getLoggedUser();
+
+        eventBus = getEventBus();
+    }
+
+    protected EventBus getEventBus() {
+        return EventBus.getDefault();
     }
 
     @Override
@@ -90,7 +97,7 @@ public class SynchronizeDataInteractorImpl implements SynchronizeDataInteractor 
 
     private void finish() {
         Log.i(LOG_TAG, "Finished...");
-        EventBus.getDefault().post(new SynchronizationFinishedEvent());
+        eventBus.post(new SynchronizationFinishedEvent());
     }
 
 }

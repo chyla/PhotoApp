@@ -2,6 +2,12 @@
 
 App to manage photos. Take a photo or find out one with Flickr and save them to view it later.
 
+## Screenshots
+
+![alt text](https://github.com/chyla/photoapp/raw/master/screenshots/PhotoApp-a1.png "Login screen")
+
+Go to [screenshots](screenshots) directory to see more.
+
 ## Getting Started
 
 1. Prepare settings for project in Google Firebase, Cloudinary and Flickr.

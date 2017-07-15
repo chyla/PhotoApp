@@ -9,7 +9,7 @@ App to manage photos. Take a photo or find out one with Flickr and save them to 
 
 ## Running the tests
 
-To run tests from Android Studio please change the working directory value to `$MODULE_DIR$`. Please see [Robolectric - Building with Android Studio](http://robolectric.org/getting-started/).
+To run tests from Android Studio please change the working directory value to `$MODULE_DIR$`. See [Robolectric - Building with Android Studio](http://robolectric.org/getting-started/) for more info.
 
 ## Built With
 

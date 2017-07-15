@@ -28,7 +28,11 @@ public class FirebaseRepository implements CloudDatabaseRepository {
     private final DatabaseReference databaseReference;
 
     public FirebaseRepository() {
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = getDatabaseReference();
+    }
+
+    protected DatabaseReference getDatabaseReference() {
+        return FirebaseDatabase.getInstance().getReference();
     }
 
     @Override

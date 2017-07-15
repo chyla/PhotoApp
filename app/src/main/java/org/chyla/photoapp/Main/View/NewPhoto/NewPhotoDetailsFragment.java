@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import org.chyla.photoapp.R;
@@ -19,6 +20,9 @@ public class NewPhotoDetailsFragment extends Fragment {
     public final static String TAG = "NewPhotoDetailsFragment";
 
     private NewPhotoCallback newPhotoCallback;
+
+    @BindView(R.id.button_save)
+    Button saveButton;
 
     @BindView(R.id.edittext_title)
     EditText titleEditText;
@@ -61,6 +65,7 @@ public class NewPhotoDetailsFragment extends Fragment {
     @OnClick(R.id.button_save)
     void onSaveButton() {
         if (titleEditText.getText().toString().length() > 0) {
+            saveButton.setClickable(false);
             newPhotoCallback.onCreateNewPhotoCallback(titleEditText.getText().toString(), descriptionEditText.getText().toString());
         }
         else {

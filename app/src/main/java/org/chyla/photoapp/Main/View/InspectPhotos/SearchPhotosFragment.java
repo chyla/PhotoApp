@@ -65,6 +65,7 @@ public class SearchPhotosFragment extends Fragment {
     @OnClick(R.id.button_search)
     void searchPhotos() {
         Log.d(TAG, "Search button clicked.");
+        searchButton.setClickable(false);
         presenter.inspectPhotos(tagsEditText.getText().toString());
     }
 

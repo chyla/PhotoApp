@@ -27,5 +27,5 @@ To run tests from Android Studio please change the working directory value to `$
 
 ## License
 
-This project is licensed under the Apache License (v.2) - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Apache License (v.2) - see the [LICENSE.md](LICENSE) file for details
 

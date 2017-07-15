@@ -4,8 +4,9 @@ App to manage photos. Take a photo or find out one with Flickr and save them to 
 
 ## Getting Started
 
-1. Place `google-services.json` file into `app/` directory.
-2. Create `cloudinary.properties` and `flickr.properties` configuration files in `app/src/main/assets/` directory. You can see examples in that directory.
+1. Prepare settings for project in Google Firebase, Cloudinary and Flickr.
+2. Place `google-services.json` file into `app/` directory.
+3. Create `cloudinary.properties` and `flickr.properties` configuration files in `app/src/main/assets/` directory. You can see examples in that directory.
 
 ## Running the tests
 

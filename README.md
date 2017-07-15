@@ -11,6 +11,10 @@ App to manage photos. Take a photo or find out one with Flickr and save them to 
 
 To run tests from Android Studio please change the working directory value to `$MODULE_DIR$`. See [Robolectric - Building with Android Studio](http://robolectric.org/getting-started/) for more info.
 
+## Deploy
+
+Run this app with Android 7.1 (API 25). Older versions are not supported.
+
 ## Built With
 
 * [greenDAO](http://greenrobot.org/greendao/)

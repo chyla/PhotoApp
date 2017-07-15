@@ -11,10 +11,16 @@ import javax.inject.Inject;
 public class AuthenticatorImpl implements Authenticator {
 
     private LoginRepository repository;
+    private EventBus eventBus;
 
     @Inject
     public AuthenticatorImpl(LoginRepository repository) {
         this.repository = repository;
+        this.eventBus = getEventBus();
+    }
+
+    protected EventBus getEventBus() {
+        return EventBus.getDefault();
     }
 
     @Override
@@ -25,12 +31,12 @@ public class AuthenticatorImpl implements Authenticator {
     @Override
     public void loginUser(String username, String password) {
         if (!isEmailValid(username)) {
-            EventBus.getDefault().post(new ErrorEvent(ErrorEvent.Type.MAIL_ERROR));
+            eventBus.post(new ErrorEvent(ErrorEvent.Type.MAIL_ERROR));
             return;
         }
 
         if (!isPasswordValid(password)) {
-            EventBus.getDefault().post(new ErrorEvent(ErrorEvent.Type.PASSWORD_ERROR));
+            eventBus.post(new ErrorEvent(ErrorEvent.Type.PASSWORD_ERROR));
             return;
         }
 
@@ -45,12 +51,12 @@ public class AuthenticatorImpl implements Authenticator {
     @Override
     public void register(String username, String password) {
         if (!isEmailValid(username)) {
-            EventBus.getDefault().post(new ErrorEvent(ErrorEvent.Type.MAIL_ERROR));
+            eventBus.post(new ErrorEvent(ErrorEvent.Type.MAIL_ERROR));
             return;
         }
 
         if (!isPasswordValid(password)) {
-            EventBus.getDefault().post(new ErrorEvent(ErrorEvent.Type.PASSWORD_ERROR));
+            eventBus.post(new ErrorEvent(ErrorEvent.Type.PASSWORD_ERROR));
             return;
         }
 
@@ -68,7 +74,7 @@ public class AuthenticatorImpl implements Authenticator {
     @Override
     public void checkUserLoggedIn() {
         if (repository.isUserLoggedIn()) {
-            EventBus.getDefault().post(new SuccessEvent());
+            eventBus.post(new SuccessEvent());
         }
     }
 
